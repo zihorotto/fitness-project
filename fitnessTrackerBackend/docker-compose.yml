@@ -1,0 +1,22 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: fitness_tracker_db
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=test1234
+      - POSTGRES_DB=fitness_tracker_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - fitness-network
+
+volumes:
+  postgres_data:
+
+networks:
+  fitness-network:
+    driver: bridge
