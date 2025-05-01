@@ -1,0 +1,63 @@
+<div>
+
+    <div nz-row>
+        <h1 nz-card-grid [ngStyle]="gridStyle" >Activity</h1>
+    </div>
+
+    <div nz-row>
+        <div nz-col nzFlex="2">
+            <nz-card nzType="inner" style="margin-top:16px;" nzTitle="Post New Activity" >
+                <form nz-form [formGroup]="activityForm" class="custom-form" (ngSubmit)="submitForm()">
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input the calories!">
+                            <input type="text" nz-input formControlName="caloriesBurned"
+                                placeholder="Enter calories you burned" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input the distance!">
+                            <input type="number" nz-input formControlName="distance"
+                                placeholder="Enter distance" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input the steps!">
+                            <input type="number" nz-input formControlName="steps"
+                                placeholder="Enter steps" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input the date!">
+                            <nz-date-picker style="width: 100%;" formControlName="date"></nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item> 
+                    
+                    <button nz-button nzType ="primary" nzBlock class="w-100" [disabled]="activityForm.invalid">
+                        Post Activity
+                    </button>"
+
+                </form>
+
+            </nz-card>
+        </div>
+        <div nz-col nzFlex="3" style="margin-left: 20px;">
+            <nz-card nzType="inner" style="margin-top:16px" nzTitle="Past activities">
+                <div nz-card-grid style="width: 100%;" *ngFor="let activity of activities">
+                    <div nz-col nzSpan="30">
+                        Calories Burned: <strong>{{activity.caloriesBurned}}</strong>
+                        -
+                        Distance: <strong>{{activity.distance}}</strong>
+                        -
+                        Steps: <strong>{{activity.steps}}</strong>
+                        -
+                        Date: <strong>{{activity.date | date}}</strong>
+                    </div>
+                </div>
+            </nz-card>
+        </div>
+    </div>
+
+</div>
