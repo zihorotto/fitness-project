@@ -7,4 +7,5 @@ import com.fitness.fitnessTrackerBackend.dto.GoalDTO;
 public interface GoalService {
     GoalDTO postGoal(GoalDTO dto);
     List<GoalDTO> getGoals();
+    GoalDTO updateStatus(Long id);
 }

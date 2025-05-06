@@ -39,4 +39,13 @@ public class GoalController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving workouts");
         }
     }
+
+    @GetMapping("/goal/status/{id}")
+    public ResponseEntity<?> updateStatus(Long id) {
+        try {
+            return ResponseEntity.ok(goalService.updateStatus(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 }
