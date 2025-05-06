@@ -50,16 +50,20 @@ export class GoalComponent {
   getAllGoals() {
     this.userService.getGoals().subscribe(res => {
       this.goals = res;
+      console.log(this.goals);
    })
   }
 
   updateStatus(id: number) {
-    this.userService.updateGoalStatus(id).subscribe(res => {
-      this.message.success("Goal updated successfully", { nzDuration: 5000 });
-      this.getAllGoals();
-    }, error => {
-      this.message.error("Error while updating Goal", { nzDuration: 5000 });
-    })
+    this.userService.updateGoalStatus(id).subscribe({
+      next: () => {
+        this.message.success("Goal updated successfully", { nzDuration: 5000 });
+        this.getAllGoals();
+      },
+      error: () => {
+        this.message.error("Error while updating Goal", { nzDuration: 5000 });
+      }
+    });
   }
-  
+
 }

@@ -24,7 +24,7 @@ public class GoalServiceImpl implements GoalService {
     public GoalDTO postGoal(GoalDTO dto) {
        Goal goal = new Goal();
 
-        goal.setDesription(dto.getDesription());
+        goal.setDescription(dto.getDescription());
         goal.setStartDate(dto.getStartDate());
         goal.setEndDate(dto.getEndDate());
         goal.setAchieved(false);

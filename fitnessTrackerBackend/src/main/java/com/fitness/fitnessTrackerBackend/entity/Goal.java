@@ -21,7 +21,7 @@ public class Goal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String desription;
+    private String description;
 
     private Date startDate;
 
@@ -33,7 +33,7 @@ public class Goal {
         GoalDTO goalDTO = new GoalDTO();
 
         goalDTO.setId(id);
-        goalDTO.setDesription(desription);
+        goalDTO.setDescription(description);
         goalDTO.setStartDate(startDate);
         goalDTO.setEndDate(endDate);
         goalDTO.setAchieved(achieved);

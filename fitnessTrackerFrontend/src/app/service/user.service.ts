@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { arch } from 'node:os';
 import { Observable } from 'rxjs';
 
 const BASIC_URL = 'http://localhost:8080/';
@@ -36,7 +37,7 @@ export class UserService {
   }
 
   updateGoalStatus(id:number) : Observable<any> {
-    return this.http.get(BASIC_URL + "api/goal/status/"+id);
+    return this.http.patch(BASIC_URL + "api/goal/status/"+id, {archived: true});
   }
   
 }

@@ -9,7 +9,7 @@ public class GoalDTO {
 
     private Long id;
 
-    private String desription;
+    private String description;
 
     private Date startDate;
 
