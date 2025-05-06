@@ -1,0 +1,48 @@
+<div>
+    <div nz-row>
+        <h1 nz-card-grid [ngStyle]="gridStyle" >Workout</h1>
+    </div>
+
+    <div nz-row>
+        <div nz-col nzFlex="2">
+            <nz-card nzType="inner" style="margin-top:16px;" nzTitle="Post New Workout">
+                <form nz-form [formGroup]="workoutForm" (ngSubmit)="submitForm()" class="custom-form">
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input the calories!">
+                            <input type="text" nz-input formControlName="caloriesBurned"
+                                placeholder="Enter the calories your burned" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input the duration!">
+                            <input type="number" nz-input formControlName="duration"
+                                placeholder="Enter the duration" />
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input the date!">
+                            <nz-date-picker style="width: 100%;" formControlName="date"></nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <nz-form-item>
+                        <nz-form-control nzErrorTip="Please input the type!">
+                            <nz-select nzAllowClear nPlaceholder="Select the type" formControlName="type">
+                                <nz-option *ngFor="let type of listOfType" [nzLabel]="type" [nzValue]="type"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <button nz-button nzType="primary" nzBlock [disabled]="workoutForm.invalid" class="w-100">
+                        Post Workout
+                    </button>
+
+                </form>
+            </nz-card>
+        </div>
+    </div>
+
+</div>
