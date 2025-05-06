@@ -52,7 +52,6 @@ export class ActivityComponent {
   getAllActivities() {
     this.userService.getActivites().subscribe(res => {
       this.activities = res;
-      console.log(this.activities);
    })
   }
 }

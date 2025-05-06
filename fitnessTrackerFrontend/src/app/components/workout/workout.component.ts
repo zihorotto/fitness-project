@@ -45,7 +45,9 @@ export class WorkoutComponent {
     "Dumbbell",
     "TRX",
     "Battle Ropes"
-  ]
+  ];
+
+  workouts: any;
 
   constructor(private fb: FormBuilder,
     private userService: UserService,
@@ -61,15 +63,23 @@ export class WorkoutComponent {
         date: [null, [Validators.required]],
         caloriesBurned: [null, [Validators.required]],
       });
+      this.getWorkouts();
     }
 
     submitForm() {
       this.userService.postWorkout(this.workoutForm.value).subscribe(res => {
         this.message.success("Workout posted successfully!", { nzDuration: 5000 });
         this.workoutForm.reset();
+        this.getWorkouts();
         }, error => {
           this.message.error("Error posting workout!", { nzDuration: 5000 });
         })
+    }
+
+    getWorkouts() {
+      this.userService.getWorkouts().subscribe(res => {
+        this.workouts = res;
+     })
     }
 
 }

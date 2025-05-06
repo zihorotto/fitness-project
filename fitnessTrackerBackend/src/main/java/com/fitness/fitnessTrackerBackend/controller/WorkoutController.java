@@ -3,6 +3,7 @@ package com.fitness.fitnessTrackerBackend.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,15 @@ public class WorkoutController {
             return ResponseEntity.ok(workoutService.postWorkout(dto));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating workout");
+        }
+    }
+
+    @GetMapping("/workouts")
+    public ResponseEntity<?> getAllWorkouts() {
+        try {
+            return ResponseEntity.ok(workoutService.getWorkouts());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving workouts");
         }
     }
 }
