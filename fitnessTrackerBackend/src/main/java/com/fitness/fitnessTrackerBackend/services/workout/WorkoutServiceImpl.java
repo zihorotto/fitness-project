@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.fitness.fitnessTrackerBackend.dto.WorkoutDTO;
-import com.fitness.fitnessTrackerBackend.entity.Activity;
 import com.fitness.fitnessTrackerBackend.entity.Workout;
 import com.fitness.fitnessTrackerBackend.repository.WorkoutRepository;
 
