@@ -3,7 +3,6 @@ package com.fitness.fitnessTrackerBackend.services.stats;
 import org.springframework.stereotype.Service;
 
 import com.fitness.fitnessTrackerBackend.dto.StatsDTO;
-import com.fitness.fitnessTrackerBackend.entity.Activity;
 import com.fitness.fitnessTrackerBackend.repository.ActivityRepository;
 import com.fitness.fitnessTrackerBackend.repository.GoalRepository;
 import com.fitness.fitnessTrackerBackend.repository.WorkoutRepository;
