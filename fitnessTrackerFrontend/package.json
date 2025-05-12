@@ -22,6 +22,7 @@
     "@angular/router": "^18.2.0",
     "@angular/ssr": "^18.2.11",
     "@ctrl/tinycolor": "^4.1.0",
+    "chart.js": "^4.4.9",
     "express": "^4.18.2",
     "ng-zorro-antd": "^18.2.1",
     "rxjs": "~7.8.0",

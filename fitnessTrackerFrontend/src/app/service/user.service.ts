@@ -43,5 +43,9 @@ export class UserService {
   getStats() : Observable<any> {
     return this.http.get(BASIC_URL + "api/stats");
   }
+
+  getGraphStats() : Observable<any> {
+    return this.http.get(BASIC_URL + "api/graphs");
+  }
   
 }
