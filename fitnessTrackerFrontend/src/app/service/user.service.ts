@@ -1,9 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { arch } from 'node:os';
 import { Observable } from 'rxjs';
 
 const BASIC_URL = 'http://localhost:8080/';
+
+export interface WOD {
+  id: number;
+  name: string;
+  description: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +51,16 @@ export class UserService {
 
   getGraphStats() : Observable<any> {
     return this.http.get(BASIC_URL + "api/graphs");
+  }
+
+  getWODs(): Observable<WOD[]> {
+    return this.http.get<WOD[]>(BASIC_URL + 'api/wods');
+  }
+
+  searchWODs(query: string): Observable<WOD[]> {
+    return this.http.get<WOD[]>(BASIC_URL + 'api/wods', {
+      params: { search: query }
+    });
   }
   
 }

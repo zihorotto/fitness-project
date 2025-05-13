@@ -3,6 +3,7 @@ import { ActivityComponent } from './components/activity/activity.component';
 import { WorkoutComponent } from './components/workout/workout.component';
 import { GoalComponent } from './components/goal/goal.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { WodsComponent } from './components/wods/wods.component';
 
 export const routes: Routes = [
     
@@ -10,5 +11,6 @@ export const routes: Routes = [
     { path: "workout", component: WorkoutComponent},
     { path: "goal", component: GoalComponent},
     { path:"dashboard", component: DashboardComponent},
+    { path: "wods", component: WodsComponent}
 
 ];

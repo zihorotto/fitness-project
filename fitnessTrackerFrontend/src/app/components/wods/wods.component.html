@@ -1,0 +1,24 @@
+<div class="wods-container">
+  <h2>Workout of the Day (WODs)</h2>
+
+  <form [formGroup]="wodsForm" (ngSubmit)="searchWODs()" class="wods-search-form">
+    <input
+      nz-input
+      formControlName="search"
+      placeholder="Search WODs"
+      class="wods-search-input"
+    />
+    <button nz-button nzType="primary" [disabled]="loading" class="wods-search-button">
+      Search
+    </button>
+  </form>
+
+  <nz-spin [nzSpinning]="loading">
+    <div class="wods-grid">
+      <div *ngFor="let wod of wods" class="wod-card">
+        <h3>{{ wod.name }}</h3>
+        <p>{{ wod.description }}</p>
+      </div>
+    </div>
+  </nz-spin>
+</div>

@@ -1,0 +1,79 @@
+{
+  "wods": [
+    {
+      "id": 1,
+      "name": "Cindy",
+      "description": "20 min AMRAP: 5 Pull-ups, 10 Push-ups, 15 Air Squats"
+    },
+    {
+      "id": 2,
+      "name": "Fran",
+      "description": "21-15-9: Thrusters (95/65 lb), Pull-ups"
+    },
+    {
+      "id": 3,
+      "name": "Murph",
+      "description": "For time: 1 mile Run, 100 Pull-ups, 200 Push-ups, 300 Air Squats, 1 mile Run (with vest)"
+    },
+    {
+      "id": 4,
+      "name": "Helen",
+      "description": "3 rounds for time: 400m Run, 21 Kettlebell Swings (53/35 lb), 12 Pull-ups"
+    },
+    {
+      "id": 5,
+      "name": "Filthy Fifty",
+      "description": "50 reps each: Box Jumps, Jumping Pull-ups, KBS, Lunges, K2E, Push Press, Back Extensions, Wall Balls, Burpees, Double Unders"
+    },
+    {
+      "id": 6,
+      "name": "Jackie",
+      "description": "For time: 1000m Row, 50 Thrusters (45 lb), 30 Pull-ups"
+    },
+    {
+      "id": 7,
+      "name": "Karen",
+      "description": "150 Wall Balls for time (20/14 lb)"
+    },
+    {
+      "id": 8,
+      "name": "Fight Gone Bad",
+      "description": "3 rounds: 1 min Wall Balls, Sumo Deadlift High-Pull, Box Jump, Push Press, Row (1 min rest)"
+    },
+    {
+      "id": 9,
+      "name": "Annie",
+      "description": "50-40-30-20-10: Double Unders, Sit-ups"
+    },
+    {
+      "id": 10,
+      "name": "Grace",
+      "description": "For time: 30 Clean and Jerks (135/95 lb)"
+    },
+    {
+      "id": 11,
+      "name": "DT",
+      "description": "5 rounds: 12 Deadlifts, 9 Hang Power Cleans, 6 Push Jerks (155/105 lb)"
+    },
+    {
+      "id": 12,
+      "name": "Nancy",
+      "description": "5 rounds for time: 400m Run, 15 Overhead Squats (95/65 lb)"
+    },
+    {
+      "id": 13,
+      "name": "Eva",
+      "description": "5 rounds: 800m Run, 30 KBS, 30 Pull-ups"
+    },
+    {
+      "id": 14,
+      "name": "Lynne",
+      "description": "5 rounds: Max Bench Press (BW), Max Pull-ups (no time)"
+    },
+    {
+      "id": 15,
+      "name": "Barbara",
+      "description": "5 rounds for time: 20 Pull-ups, 30 Push-ups, 40 Sit-ups, 50 Air Squats (3 min rest between rounds)"
+    }
+  ]
+}

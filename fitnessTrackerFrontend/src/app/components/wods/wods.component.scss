@@ -1,0 +1,53 @@
+.wods-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.wods-search-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.wods-search-input {
+  flex: 1;
+  max-width: 400px;
+}
+
+.wods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.wod-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: left;
+}
+
+.wod-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.wod-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.wod-card p {
+  margin: 0;
+  color: #666;
+  font-size: 1em;
+  line-height: 1.5;
+}
