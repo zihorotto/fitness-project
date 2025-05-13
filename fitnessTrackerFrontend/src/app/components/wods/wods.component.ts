@@ -4,6 +4,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { UserService } from '../../service/user.service';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
+import { WOD } from '../../service/user.service';
 
 @Component({
   selector: 'app-wods',
@@ -14,7 +15,7 @@ import { SharedModule } from '../../shared/shared.module';
 })
 export class WodsComponent implements OnInit {
   wodsForm!: FormGroup;
-  wods: any[] = [];
+  wods: WOD[] = [];
   loading = false;
 
   constructor(

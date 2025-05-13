@@ -1,0 +1,22 @@
+<div *ngIf="loading" class="flex justify-center items-center min-h-[300px]">
+  <nz-spin></nz-spin>
+</div>
+
+<div *ngIf="!loading" class="min-h-screen bg-gray-50 px-6 py-12">
+  <div class="max-w-3xl mx-auto bg-white p-10 rounded-3xl shadow-xl border border-gray-200">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">{{ wod.name }}</h2>
+
+    <div class="text-gray-700 whitespace-pre-line leading-relaxed text-md">
+      {{ wod.description }}
+    </div>
+
+    <div class="mt-10 text-center">
+      <a
+        routerLink="/wods"
+        class="inline-block bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400 transition"
+      >
+        ← Back to WODs
+      </a>
+    </div>
+  </div>
+</div>

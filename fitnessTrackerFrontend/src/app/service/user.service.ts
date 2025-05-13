@@ -62,5 +62,9 @@ export class UserService {
       params: { search: query }
     });
   }
+
+    getWODById(id: number): Observable<WOD> {
+    return this.http.get<WOD>(BASIC_URL + 'api/wods/'+id);
+  }
   
 }

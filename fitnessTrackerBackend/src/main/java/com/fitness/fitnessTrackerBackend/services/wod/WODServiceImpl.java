@@ -1,6 +1,7 @@
 package com.fitness.fitnessTrackerBackend.services.wod;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,21 @@ public class WODServiceImpl implements WODService {
 
     @Override
     public List<WOD> getWODs(String search) {
-        if (search != null && !search.isBlank()) {
-            return wodRepository.findByNameContainingIgnoreCase(search);
+        if (search != null && !search.isEmpty()) {
+            return wodRepository.findByNameContainingIgnoreCase(search); // Ha van keresési kulcsszó, használjuk a keresést.
+        } else {
+            return wodRepository.findAll(); // Ha nincs keresési kulcsszó, akkor az összes WOD-ot lekérjük.
         }
-        return wodRepository.findAll();
+    }
+
+    @Override
+    public WOD getWODById(Long id) {
+        return wodRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("WOD not found with id " + id));
+    }
+
+    @Override
+    public List<WOD> searchWODs(String query) {
+        return wodRepository.findByNameContainingIgnoreCase(query);
     }
 }

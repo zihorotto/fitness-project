@@ -1,23 +1,32 @@
-<div class="wods-container">
-  <h2>Workout of the Day (WODs)</h2>
+<div class="container mx-auto px-4 py-6">
+  <h2 class="text-3xl font-bold mb-6 text-center">Workout of the Day (WODs)</h2>
 
-  <form [formGroup]="wodsForm" (ngSubmit)="searchWODs()" class="wods-search-form">
+  <form [formGroup]="wodsForm" (ngSubmit)="searchWODs()" class="flex gap-2 justify-center mb-8">
     <input
       nz-input
       formControlName="search"
       placeholder="Search WODs"
-      class="wods-search-input"
-    />
-    <button nz-button nzType="primary" [disabled]="loading" class="wods-search-button">
+      class="w-1/2 px-4 py-2 border border-gray-300 rounded-md"
+      (ngModelChange)="searchWODs()" />
+    <button
+      nz-button
+      nzType="primary"
+      [disabled]="loading"
+      class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
       Search
     </button>
   </form>
 
   <nz-spin [nzSpinning]="loading">
-    <div class="wods-grid">
-      <div *ngFor="let wod of wods" class="wod-card">
-        <h3>{{ wod.name }}</h3>
-        <p>{{ wod.description }}</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div
+        *ngFor="let wod of wods"
+        class="bg-white shadow-lg rounded-xl p-6 hover:shadow-2xl transition duration-300 ease-in-out">
+        <h3 class="text-xl font-semibold mb-2">{{ wod.name }}</h3>
+        <p class="text-gray-600 line-clamp-4 mb-4">{{ wod.description }}</p>
+        <a [routerLink]="['/wod-details', wod.id]" class="text-blue-600 hover:underline font-medium">
+          View Details →
+        </a>
       </div>
     </div>
   </nz-spin>
