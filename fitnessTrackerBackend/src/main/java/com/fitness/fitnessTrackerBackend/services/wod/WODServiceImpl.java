@@ -19,9 +19,9 @@ public class WODServiceImpl implements WODService {
     @Override
     public List<WOD> getWODs(String search) {
         if (search != null && !search.isEmpty()) {
-            return wodRepository.findByNameContainingIgnoreCase(search); // Ha van keresési kulcsszó, használjuk a keresést.
+            return wodRepository.findByNameContainingIgnoreCase(search);
         } else {
-            return wodRepository.findAll(); // Ha nincs keresési kulcsszó, akkor az összes WOD-ot lekérjük.
+            return wodRepository.findAll();
         }
     }
 
@@ -32,7 +32,16 @@ public class WODServiceImpl implements WODService {
     }
 
     @Override
-    public List<WOD> searchWODs(String query) {
-        return wodRepository.findByNameContainingIgnoreCase(query);
+    public List<WOD> searchWODs(String searchTerm) {
+        return wodRepository.searchWODs(searchTerm);
+    }
+
+    @Override
+    public WOD createWOD(WOD wod) {
+        boolean exists = wodRepository.existsByNameIgnoreCase(wod.getName());
+        if (exists) {
+            throw new RuntimeException("WOD with name '" + wod.getName() + "' already exists.");
+        }
+        return wodRepository.save(wod);
     }
 }

@@ -5,9 +5,13 @@ import { Observable } from 'rxjs';
 const BASIC_URL = 'http://localhost:8080/';
 
 export interface WOD {
-  id: number;
+  id?: number;
   name: string;
-  description: string;
+  type?: string;
+  category?: string;
+  durationInMinutes?: number;
+  description?: string;
+  fullDescription?: string;
 }
 
 @Injectable({
@@ -58,13 +62,17 @@ export class UserService {
   }
 
   searchWODs(query: string): Observable<WOD[]> {
-    return this.http.get<WOD[]>(BASIC_URL + 'api/wods', {
-      params: { search: query }
+    return this.http.get<WOD[]>(BASIC_URL + 'api/wods/search', {
+      params: { searchTerm: query }
     });
   }
 
     getWODById(id: number): Observable<WOD> {
     return this.http.get<WOD>(BASIC_URL + 'api/wods/'+id);
   }
-  
+
+    createWOD(wod: WOD): Observable<WOD> {
+    return this.http.post<WOD>(BASIC_URL + 'api/wods', wod);
+  }
+
 }

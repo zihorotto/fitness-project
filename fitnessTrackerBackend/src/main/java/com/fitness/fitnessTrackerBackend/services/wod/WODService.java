@@ -8,4 +8,5 @@ public interface WODService {
     List<WOD> getWODs(String search);
     WOD getWODById(Long id);
     List<WOD> searchWODs(String query);
+    public WOD createWOD(WOD wod);
 }

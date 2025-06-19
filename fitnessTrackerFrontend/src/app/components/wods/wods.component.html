@@ -17,13 +17,95 @@
     </button>
   </form>
 
+<!-- New WOD creation form -->
+  <div class="max-w-lg mx-auto p-4 mb-10 border rounded-md shadow-md">
+    <h3 class="text-xl font-semibold mb-4 text-center">Create New WOD</h3>
+
+    <form [formGroup]="newWodForm" (ngSubmit)="createWOD()" class="space-y-4">
+      <nz-form-item>
+        <nz-form-label nzRequired>Name</nz-form-label>
+        <nz-form-control [nzErrorTip]="'Name is required'">
+          <input nz-input formControlName="name" placeholder="WOD Name" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>Description</nz-form-label>
+        <nz-form-control>
+          <textarea
+            nz-input
+            formControlName="description"
+            rows="3"
+            placeholder="Description (optional)"
+          ></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>Category</nz-form-label>
+        <nz-form-control [nzErrorTip]="'Category is required'">
+          <nz-select formControlName="category" placeholder="Select category">
+            <nz-option
+              *ngFor="let cat of categories"
+              [nzValue]="cat"
+              [nzLabel]="cat"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>Type</nz-form-label>
+        <nz-form-control [nzErrorTip]="'Type is required'">
+          <nz-select formControlName="type" placeholder="Select type">
+            <nz-option
+              *ngFor="let t of types"
+              [nzValue]="t"
+              [nzLabel]="t"
+            ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>Duration (minutes)</nz-form-label>
+        <nz-form-control [nzErrorTip]="'Duration must be at least 1 minute'">
+          <input
+            nz-input
+            type="number"
+            formControlName="durationInMinutes"
+            placeholder="Duration"
+            min="1"
+          />
+        </nz-form-control>
+      </nz-form-item>
+
+      <button
+        nz-button
+        nzType="primary"
+        [disabled]="creating || newWodForm.invalid"
+        class="w-full"
+      >
+        Create WOD
+      </button>
+    </form>
+  </div>
+
   <nz-spin [nzSpinning]="loading">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
       <div
         *ngFor="let wod of wods"
         class="bg-white shadow-lg rounded-xl p-6 hover:shadow-2xl transition duration-300 ease-in-out">
+        
         <h3 class="text-xl font-semibold mb-2">{{ wod.name }}</h3>
-        <p class="text-gray-600 line-clamp-4 mb-4">{{ wod.description }}</p>
+        <p class="text-gray-600 mb-4">{{ wod.description }}</p>
+
+        <p class="text-sm text-gray-500 flex justify-between">
+          <span>{{ wod.category }}</span>
+          <span>{{ wod.durationInMinutes }} minutes</span>
+          <span>{{ wod.type }}</span>
+        </p>
+
         <a [routerLink]="['/wod-details', wod.id]" class="text-blue-600 hover:underline font-medium">
           View Details →
         </a>
