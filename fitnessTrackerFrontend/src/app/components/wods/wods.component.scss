@@ -76,8 +76,33 @@
   outline: none;
 }
 
-.wods-search-button {
-  font-size: 14px;
+.search-button,
+.wods-search-button,
+.lila-button {
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+  color: white;
+  font-weight: 600;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 0.375rem;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+  line-height: 1;
+  width: auto;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.search-button:hover,
+.wods-search-button:hover,
+.lila-button:hover {
+  background: linear-gradient(135deg, #5b21b6, #4c1d95);
+  box-shadow: 0 6px 20px rgba(91, 33, 182, 0.5);
+  transform: translateY(-2px);
 }
 
 .wods-grid {

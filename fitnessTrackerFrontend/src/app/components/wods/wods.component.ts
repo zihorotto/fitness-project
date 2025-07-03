@@ -61,6 +61,7 @@ export class WodsComponent implements OnInit {
       category: ['', Validators.required],
       type: ['', Validators.required],
       durationInMinutes: [null, [Validators.required, Validators.min(1)]],
+      movements: ['', Validators.required],
     });
 
     this.getAllWODs();
@@ -130,4 +131,34 @@ export class WodsComponent implements OnInit {
       },
     });
   }
+
+  generateWODWithAI() {
+    
+      console.log('Form érték:', this.newWodForm.value);
+
+    if (this.newWodForm.invalid) {
+      this.message.error('Please fill all required fields.');
+      return;
+    }
+
+    const { name, type, category, durationInMinutes, movements } = this.newWodForm.value;
+
+    this.creating = true;
+
+    this.userService.generateAndSaveWOD({ name, type, category, durationInMinutes, movements }).subscribe({
+      next: (generatedWod) => {
+        console.log('✅ Sikeres válasz (next):', generatedWod);
+        this.message.success('AI-generated WOD created and saved!');
+        this.newWodForm.reset();
+        this.creating = false;
+        this.getAllWODs();
+      },
+      error: (err) => {
+        console.error('❌ Hiba történt (error ág):', err);
+        this.message.error('Failed to generate WOD.');
+        this.creating = false;
+      }
+    });
+  }
+
 }

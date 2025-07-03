@@ -1,245 +1,124 @@
-<div class="container mx-auto px-6 py-8 max-w-7xl">
-  <style>
-    /* Egyedi stílusok, a hover effekt kiegészítésekkel */
-    input[nz-input] {
-      transition: all 0.3s ease;
-    }
-    input[nz-input]:hover {
-      background: linear-gradient(135deg, #7c3aed, #5b21b6);
-      color: white;
-      border-color: #7c3aed !important;
-    }
-    input[nz-input]:focus,
-    textarea[nz-input]:focus,
-    nz-select ::ng-deep .ant-select-selector:focus {
-      border-color: #7c3aed !important;
-      box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.4) !important;
-      outline: none !important;
-      color: white;
-    }
+<div class="wods-container container mx-auto px-6 py-8 max-w-7xl">
+  <h1 class="text-4xl font-extrabold mb-8 text-center text-gray-900 slide-in">
+    Workout of the Day (WODs) — Working Of the Day
+  </h1>
 
-    /* Lila gombok */
-    .lila-button, .create-wod-submit-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #7c3aed, #5b21b6);
-      color: white;
-      font-weight: 600;
-      padding: 12px 24px;
-      border-radius: 0.375rem;
-      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
-      transition: all 0.3s ease;
-      line-height: 1;
-      text-align: center;
-      border: none;
-      cursor: pointer;
-      width: auto; /* ne legyen 100%, mert keresőgombbal azonos szélességet akarunk */
-      min-width: 140px; /* legalább ekkora legyen */
-      height: 44px; /* egységes magasság */
-    }
-    .lila-button:hover, .create-wod-submit-button:hover {
-      background: linear-gradient(135deg, #5b21b6, #4c1d95);
-      box-shadow: 0 6px 20px rgba(91, 33, 182, 0.5);
-      transform: translateY(-2px);
-      color: white;
-    }
-
-    /* Create WOD form gombja - kerek, lila */
-    .create-wod-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #7c3aed, #5b21b6);
-      color: white;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: 600;
-      border: none;
-      border-radius: 9999px;
-      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
-      transition: all 0.3s ease;
-      text-align: center;
-      line-height: 1;
-      cursor: pointer;
-      height: 44px;
-    }
-    .create-wod-button:hover {
-      background: linear-gradient(135deg, #5b21b6, #4c1d95);
-      box-shadow: 0 6px 20px rgba(91, 33, 182, 0.5);
-      transform: translateY(-2px);
-      color: white;
-    }
-
-    /* Input és gomb egyforma méret */
-    form.search-form {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      max-width: 480px;
-      margin: 0 auto 2.5rem auto;
-    }
-    form.search-form input[nz-input] {
-      flex-grow: 1;
-      height: 44px;
-      border-radius: 0.375rem;
-      padding: 0 16px;
-      border: 1px solid #d1d5db; /* gray-300 */
-      font-size: 16px;
-      transition: all 0.3s ease;
-      color: #374151; /* gray-700 */
-      background: white;
-    }
-    form.search-form input[nz-input]:hover {
-      background: linear-gradient(135deg, #7c3aed, #5b21b6);
-      color: white;
-      border-color: #7c3aed;
-    }
-
-    form.search-form button.lila-button {
-      width: 140px;
-      height: 44px;
-      padding: 0 24px;
-    }
-  </style>
-
- <h1
-  class="text-4xl font-extrabold mb-8 text-center text-gray-900 slide-in"
-  [ngStyle]="gridStyle"
->
-  Workout of the Day (WODs) — Working Of the Day
-</h1>
-
-  <!-- Search bar -->
-  <form [formGroup]="wodsForm" (ngSubmit)="searchWODs()" class="search-form">
+  <!-- Search -->
+  <form [formGroup]="wodsForm" (ngSubmit)="searchWODs()" class="wods-search-form">
     <input
       nz-input
       formControlName="search"
+      class="wods-search-input"
       placeholder="Search WODs"
       (ngModelChange)="searchWODs()" />
     <button
       nz-button
       nzType="default"
       [disabled]="loading"
-      class="lila-button">
+      class="wods-search-button lila-button">
       Search
     </button>
   </form>
 
-  <!-- Create button -->
+  <!-- Create WOD trigger -->
   <div class="text-center mb-12">
-    <button
-      nz-button
-      (click)="toggleCreateSection()"
-      class="create-wod-submit-button">
+    <button nz-button (click)="toggleCreateSection()" class="create-wod-submit-button lila-button">
       {{ createSectionVisible ? 'Close' : 'Create New WOD' }}
     </button>
   </div>
 
-  <!-- Create WOD Section -->
+  <!-- WOD form -->
   <div
     [@toggleHeight]="createSectionVisible ? 'expanded' : 'collapsed'"
     class="max-w-xl mx-auto mb-14 overflow-hidden transition-all duration-300">
     <div class="p-8 border border-gray-200 rounded-2xl shadow-lg bg-white">
       <h3 class="text-3xl font-semibold mb-8 text-center text-gray-800">Create a New WOD</h3>
 
-      <form [formGroup]="newWodForm" (ngSubmit)="createWOD()" class="space-y-6">
+      <form [formGroup]="newWodForm" (ngSubmit)="createWOD()" class="space-y-6" novalidate>
         <nz-form-item>
-          <nz-form-label nzRequired nzFor="name" class="text-lg font-medium">Name</nz-form-label>
+          <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
           <nz-form-control [nzErrorTip]="'Name is required'">
-            <input
-              id="name"
-              nz-input
-              formControlName="name"
-              placeholder="WOD Name"
-              class="px-4 py-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:outline-none" />
+            <input id="name" nz-input formControlName="name" placeholder="WOD Name" />
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label nzFor="description" class="text-lg font-medium">Description</nz-form-label>
+          <nz-form-label nzFor="description">Description</nz-form-label>
           <nz-form-control>
             <textarea
               id="description"
               nz-input
               formControlName="description"
               rows="4"
-              placeholder="Description (optional)"
-              class="px-4 py-3 rounded-md border border-gray-300 resize-y focus:ring-2 focus:ring-indigo-400 focus:outline-none"></textarea>
+              class="no-lila-hover"
+              placeholder="Description (optional)"></textarea>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label nzRequired nzFor="category" class="text-lg font-medium">Category</nz-form-label>
+          <nz-form-label nzRequired nzFor="category">Category</nz-form-label>
           <nz-form-control [nzErrorTip]="'Category is required'">
-            <nz-select
-              id="category"
-              formControlName="category"
-              placeholder="Select category"
-              class="w-full rounded-md"
-              [nzDropdownMatchSelectWidth]="false">
+            <nz-select id="category" formControlName="category" class="no-lila-hover" placeholder="Select category">
               <nz-option *ngFor="let cat of categories" [nzValue]="cat" [nzLabel]="cat"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label nzRequired nzFor="type" class="text-lg font-medium">Type</nz-form-label>
+          <nz-form-label nzRequired nzFor="type">Type</nz-form-label>
           <nz-form-control [nzErrorTip]="'Type is required'">
-            <nz-select
-              id="type"
-              formControlName="type"
-              placeholder="Select type"
-              class="w-full rounded-md"
-              [nzDropdownMatchSelectWidth]="false">
+            <nz-select id="type" formControlName="type" class="no-lila-hover" placeholder="Select type">
               <nz-option *ngFor="let t of types" [nzValue]="t" [nzLabel]="t"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label nzRequired nzFor="duration" class="text-lg font-medium">Duration (minutes)</nz-form-label>
-          <nz-form-control [nzErrorTip]="'Duration must be at least 1 minute'">
-            <input
-              id="duration"
-              nz-input
-              type="number"
-              formControlName="durationInMinutes"
-              placeholder="Duration"
-              min="1"
-              class="px-4 py-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:outline-none" />
+          <nz-form-label nzRequired nzFor="movements">Movements</nz-form-label>
+          <nz-form-control [nzErrorTip]="'Movements are required'">
+            <input id="movements" nz-input formControlName="movements" placeholder="e.g. Push-ups, Squats" />
           </nz-form-control>
         </nz-form-item>
 
-        <button
-          nz-button
-          nzType="default"
-          [disabled]="creating || newWodForm.invalid"
-          class="create-wod-button">
-          {{ creating ? 'Creating...' : 'Create WOD' }}
-        </button>
+        <nz-form-item>
+          <nz-form-label nzRequired nzFor="duration">Duration (minutes)</nz-form-label>
+          <nz-form-control [nzErrorTip]="'Duration must be at least 1 minute'">
+            <input id="duration" nz-input type="number" formControlName="durationInMinutes" placeholder="Duration" min="1" />
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- Buttons -->
+        <div class="flex flex-wrap gap-4 justify-center">
+          <button type="submit" nz-button nzType="default" class="create-wod-button" [disabled]="creating || newWodForm.invalid">
+            {{ creating ? 'Creating...' : 'Create WOD' }}
+          </button>
+          <button nz-button nzType="default" class="create-wod-button" type="button" (click)="generateWODWithAI()" [disabled]="creating || newWodForm.invalid">
+            {{ creating ? 'Generating...' : 'Generate WOD with AI' }}
+          </button>
+        </div>
       </form>
     </div>
   </div>
 
-<!-- WOD cards grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-<div
-  *ngFor="let wod of wods"
-  class="wod-card bg-white rounded-xl shadow-lg overflow-hidden flex flex-col cursor-pointer hover:shadow-xl transition"
-  [routerLink]="['/wod-details', wod.id]"
->
-  <div class="px-6 py-4 flex-grow">
-    <h3 class="text-xl font-bold mb-2 text-gray-900">{{ wod.name }}</h3>
-<p class="text-gray-700 text-sm" style="white-space: pre-line;">{{ wod.description }}</p>
+  <!-- WOD cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div
+      *ngFor="let wod of wods"
+      class="wod-card bg-white rounded-xl shadow-lg overflow-hidden flex flex-col cursor-pointer hover:shadow-xl transition"
+      [routerLink]="['/wod-details', wod.id]"
+    >
+      <div class="px-6 py-4 flex-grow">
+        <h3 class="text-xl font-bold mb-2 text-gray-900">{{ wod.name }}</h3>
+    <p class="text-gray-700 text-sm" style="white-space: pre-line;">{{ wod.description }}</p>
+      </div>
+      <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 text-gray-600 text-xs font-semibold">
+        <p class="default-text">{{ wod.type }}</p>
+        <p class="hover-text">Let's Go</p>
+      </div>
+    </div>
   </div>
-  <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 text-gray-600 text-xs font-semibold">
-    <p class="default-text">{{ wod.type }}</p>
-    <p class="hover-text">Let's Go</p>
-  </div>
-</div>
-</div>
 
+  <!-- No result -->
   <ng-template #noWods>
     <p class="text-center text-gray-500">No WODs found.</p>
   </ng-template>

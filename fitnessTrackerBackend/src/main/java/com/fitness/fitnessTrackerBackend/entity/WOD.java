@@ -27,4 +27,7 @@ public class WOD {
 
     @Column(name = "full_description", length = 5000)
     private String fullDescription;
+
+    @Column(name = "movements", length = 1000)
+    private String movements;
 }

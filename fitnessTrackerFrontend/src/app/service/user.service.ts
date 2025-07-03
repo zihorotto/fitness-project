@@ -75,4 +75,14 @@ export class UserService {
     return this.http.post<WOD>(BASIC_URL + 'api/wods', wod);
   }
 
+    generateAndSaveWOD(data: {
+    name: string;  
+    type: string;
+    category: string;
+    durationInMinutes: number;
+    movements: string;
+  }): Observable<any> {
+    return this.http.post<WOD>(BASIC_URL + 'api/wods/generate-and-save', data);
+  }
+
 }
