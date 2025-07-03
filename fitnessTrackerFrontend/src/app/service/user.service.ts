@@ -85,4 +85,8 @@ export class UserService {
     return this.http.post<WOD>(BASIC_URL + 'api/wods/generate-and-save', data);
   }
 
+    saveWodResult(result: { wodId: number; durationInSeconds: number; reps: number }) {
+      return this.http.post(BASIC_URL + 'api/wod-results', result);
+    }
+
 }

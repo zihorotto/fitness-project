@@ -26,6 +26,9 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
   emomRound: number = 0;
   emomTotalRounds: number = 0;
 
+  elapsedSeconds: number = 0;
+  secondsLeft: number = 0;
+
   // Tabata
   tabataRound: number = 1;
   tabataPhase: 'work' | 'rest' = 'work';
@@ -74,76 +77,76 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggleTimer() {
-    this.timerRunning = !this.timerRunning;
+ toggleTimer() {
+  this.timerRunning = !this.timerRunning;
+  const type = this.wod.type.replace(/\s+/g, '').toLowerCase();
 
-    if (this.timerRunning) {
-      const type = this.wod.type.replace(/\s+/g, '').toLowerCase();;
-
-      if (type === 'amrap') {
-        let secondsLeft = this.wod.durationInMinutes * 60;
-        this.timer = setInterval(() => {
-          secondsLeft--;
-          this.displayTime = this.formatTime(secondsLeft);
-          if (secondsLeft <= 0) {
+  if (this.timerRunning) {
+    if (type === 'amrap') {
+      this.secondsLeft = this.wod.durationInMinutes * 60;
+      this.elapsedSeconds = 0;  // még nem telt el idő
+      this.timer = setInterval(() => {
+        this.secondsLeft--;
+        this.elapsedSeconds++;  // itt növeljük, mert telt idő is fontos
+        this.displayTime = this.formatTime(this.secondsLeft);
+        if (this.secondsLeft <= 0) {
+          this.stopTimer();
+        }
+      }, 1000);
+    }
+    else if (type === 'fortime') {
+      this.elapsedSeconds = 0;
+      this.timer = setInterval(() => {
+        this.elapsedSeconds++;
+        this.displayTime = this.formatTime(this.elapsedSeconds);
+      }, 1000);
+    }
+    else if (type === 'emom') {
+      this.elapsedSeconds = 0;
+      this.emomRound = 0;
+      this.timer = setInterval(() => {
+        this.elapsedSeconds++;
+        this.displayTime = this.formatTime(this.elapsedSeconds);
+        if (this.elapsedSeconds % 60 === 0) {
+          this.emomRound++;
+          if (this.emomRound >= this.emomTotalRounds) {
             this.stopTimer();
           }
-        }, 1000);
-      }
+        }
+      }, 1000);
+    }
+    else if (type === 'tabata') {
+      this.tabataRound = 1;
+      this.tabataPhase = 'work';
+      this.secondsLeft = 20;
+      this.elapsedSeconds = 0;
+      const totalRounds = 8;
+      this.displayTime = this.formatTime(this.secondsLeft);
 
-      else if (type === 'fortime') {
-        let elapsedSeconds = 0;
-        this.timer = setInterval(() => {
-          elapsedSeconds++;
-          this.displayTime = this.formatTime(elapsedSeconds);
-        }, 1000);
-      }
+      this.timer = setInterval(() => {
+        this.secondsLeft--;
+        this.elapsedSeconds++;
+        this.displayTime = this.formatTime(this.secondsLeft);
 
-      else if (type === 'emom') {
-        let elapsedSeconds = 0;
-        this.timer = setInterval(() => {
-          elapsedSeconds++;
-          this.displayTime = this.formatTime(elapsedSeconds);
-          if (elapsedSeconds % 60 === 0) {
-            this.emomRound++;
-            if (this.emomRound > this.emomTotalRounds) {
+        if (this.secondsLeft <= 0) {
+          if (this.tabataPhase === 'work') {
+            this.tabataPhase = 'rest';
+            this.secondsLeft = 10;
+          } else {
+            this.tabataPhase = 'work';
+            this.tabataRound++;
+            this.secondsLeft = 20;
+            if (this.tabataRound > totalRounds) {
               this.stopTimer();
             }
           }
-        }, 1000);
-      }
-
-      else if (type === 'tabata') {
-        let secondsLeft = 20;
-        let totalRounds = 8;
-        this.tabataRound = 1;
-        this.tabataPhase = 'work';
-        this.tabataPhaseSeconds = secondsLeft;
-        this.displayTime = this.formatTime(secondsLeft);
-
-        this.timer = setInterval(() => {
-          secondsLeft--;
-          this.displayTime = this.formatTime(secondsLeft);
-
-          if (secondsLeft <= 0) {
-            if (this.tabataPhase === 'work') {
-              this.tabataPhase = 'rest';
-              secondsLeft = 10;
-            } else {
-              this.tabataPhase = 'work';
-              this.tabataRound++;
-              secondsLeft = 20;
-              if (this.tabataRound > totalRounds) {
-                this.stopTimer();
-              }
-            }
-          }
-        }, 1000);
-      }
-    } else {
-      this.stopTimer();
+        }
+      }, 1000);
     }
+  } else {
+    this.stopTimer();
   }
+}
 
   stopTimer() {
     this.timerRunning = false;
@@ -159,4 +162,33 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
     const sec = (seconds % 60).toString().padStart(2, '0');
     return `${min}:${sec}`;
   }
+    stopAndSave() {
+    if (!this.timerRunning && this.elapsedSeconds === 0) {
+      return;
+    }
+
+    this.stopTimer();
+
+    const wodResult = {
+      wodId: this.wod.id,
+      durationInSeconds: this.elapsedSeconds,
+      reps: this.reps,
+      };
+      console.log('Saving WOD Result:', {
+    wodId: this.wod.id,
+    durationInSeconds: this.elapsedSeconds,
+    reps: this.reps
+  });
+
+    this.userService.saveWodResult(wodResult).subscribe({
+      next: () => {
+        alert('Workout result saved successfully!');
+      },
+      error: (err) => {
+        console.error('Error saving workout result:', err);
+        alert('Failed to save workout result.');
+      }
+    });
+  }
+
 }

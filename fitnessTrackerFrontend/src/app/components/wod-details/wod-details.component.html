@@ -48,7 +48,13 @@
       >
         {{ timerRunning ? 'Pause ⏸' : 'Start ▶️' }}
       </button>
-
+      <button
+        (click)="stopAndSave()"
+        [disabled]="!timerRunning && elapsedSeconds === 0"
+        class="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 shadow-md transition duration-200 ml-4"
+      >
+        Stop & Save ⏹
+      </button>
       <!-- Ismétlések kezelése -->
       <div class="flex items-center space-x-4 mt-4" *ngIf="showReps">
         <button
