@@ -43,7 +43,6 @@ Chart.register(
   providers: [DatePipe],
 })
 export class DashboardComponent {
-
   // Helper to detect mobile (for template binding)
   isMobile(): boolean {
     return window.innerWidth <= 700;
@@ -60,7 +59,6 @@ export class DashboardComponent {
 
   @ViewChild('workoutLineChart') private workoutLineChartRef: ElementRef;
   @ViewChild('activityLineChart') private activityLineChartRef: ElementRef;
-
 
   constructor(
     private userService: UserService,

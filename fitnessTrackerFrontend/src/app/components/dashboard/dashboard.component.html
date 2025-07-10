@@ -60,8 +60,13 @@
             />
           </ng-container>
         </svg>
-        <span class="text-4xl font-extrabold text-purple-700 z-10">{{ totalLoggedMinutes }}</span>
-        <span class="absolute bottom-8 left-1/2 -translate-x-1/2 text-purple-500 font-semibold">minutes</span>
+        <span class="text-4xl font-extrabold text-purple-700 z-10">{{
+          totalLoggedMinutes
+        }}</span>
+        <span
+          class="absolute bottom-8 left-1/2 -translate-x-1/2 text-purple-500 font-semibold"
+          >minutes</span
+        >
       </div>
     </div>
 
@@ -72,7 +77,9 @@
         [routerLink]="['/wod-details', wod.id]"
       >
         <div class="px-6 py-4 flex-grow">
-          <h3 class="text-xl font-bold mb-2 text-gray-900 text-center">{{ wod.name }}</h3>
+          <h3 class="text-xl font-bold mb-2 text-gray-900 text-center">
+            {{ wod.name }}
+          </h3>
           <p class="text-gray-700 text-sm" style="white-space: pre-line">
             {{ wod.description }}
           </p>
