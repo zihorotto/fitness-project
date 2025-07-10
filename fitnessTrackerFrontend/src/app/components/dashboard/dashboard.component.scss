@@ -1,0 +1,162 @@
+// --- Timer wrapper for mobile/desktop ---
+.dashboard-timer-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 220px;
+  height: 220px;
+  max-width: 90vw;
+  max-height: 90vw;
+  margin: 0 auto 1.5rem auto;
+}
+.dashboard-timer-svg {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 120px;
+  min-height: 120px;
+  max-width: 98vw;
+  max-height: 98vw;
+  display: block;
+}
+.dashboard-timer-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #7c3aed;
+  z-index: 2;
+  user-select: none;
+}
+.dashboard-timer-label {
+  position: absolute;
+  bottom: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #a78bfa;
+  font-weight: 600;
+  font-size: 1.1rem;
+  z-index: 2;
+  user-select: none;
+}
+@media (max-width: 700px) {
+  .dashboard-timer-wrapper {
+    width: 90vw !important;
+    height: 90vw !important;
+    min-width: 180px !important;
+    min-height: 180px !important;
+    max-width: 98vw;
+    max-height: 98vw;
+  }
+  .dashboard-timer-svg {
+    min-width: 180px !important;
+    min-height: 180px !important;
+    max-width: 98vw;
+    max-height: 98vw;
+  }
+  .dashboard-timer-value {
+    font-size: 2.1rem;
+    top: 48%;
+  }
+  .dashboard-timer-label {
+    font-size: 1rem;
+    bottom: 0.7rem;
+  }
+}
+@media (max-width: 480px) {
+  .dashboard-timer-wrapper {
+    width: 98vw !important;
+    height: 98vw !important;
+    min-width: 120px !important;
+    min-height: 120px !important;
+    max-width: 99vw;
+    max-height: 99vw;
+  }
+  .dashboard-timer-svg {
+    min-width: 120px !important;
+    min-height: 120px !important;
+    max-width: 99vw;
+    max-height: 99vw;
+  }
+  .dashboard-timer-value {
+    font-size: 1.5rem;
+    top: 46%;
+  }
+  .dashboard-timer-label {
+    font-size: 0.95rem;
+    bottom: 0.2rem;
+  }
+}
+.wod-card h3 {
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .wod-card h3 {
+    font-size: 1.1rem;
+    text-align: center;
+  }
+}
+
+.dashboard-wods-container .w-64,
+.dashboard-wods-container .h-64 {
+  width: 220px !important;
+  height: 220px !important;
+  max-width: 90vw;
+  max-height: 90vw;
+}
+
+.dashboard-wods-container svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+// Fix timer size and appearance for mobile: always visible, large, and not a thin purple line
+@media (max-width: 700px) {
+  .dashboard-wods-container .w-64,
+  .dashboard-wods-container .h-64 {
+    width: 90vw !important;
+    height: 90vw !important;
+    min-width: 180px !important;
+    min-height: 180px !important;
+    max-width: 98vw;
+    max-height: 98vw;
+    margin: 0 auto;
+  }
+  .dashboard-wods-container svg {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 180px !important;
+    min-height: 180px !important;
+    max-width: 98vw;
+    max-height: 98vw;
+    display: block;
+  }
+  .dashboard-wods-container .w-64 circle {
+    stroke-width: 18 !important;
+  }
+}
+@media (max-width: 480px) {
+  .dashboard-wods-container .w-64,
+  .dashboard-wods-container .h-64 {
+    width: 98vw !important;
+    height: 98vw !important;
+    min-width: 120px !important;
+    min-height: 120px !important;
+    max-width: 99vw;
+    max-height: 99vw;
+  }
+  .dashboard-wods-container svg {
+    min-width: 120px !important;
+    min-height: 120px !important;
+    max-width: 99vw;
+    max-height: 99vw;
+  }
+  .dashboard-wods-container .w-64 circle {
+    stroke-width: 20 !important;
+  }
+}

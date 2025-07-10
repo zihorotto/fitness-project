@@ -14,47 +14,42 @@ export interface WOD {
   fullDescription?: string;
 }
 
+export interface WodResultResponseDto {
+  id: number;
+  wodId: number;
+  durationInSeconds: number;
+  reps: number;
+  savedAt: string;
+}
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http:HttpClient) { }
+  // Removed Activity and Workout methods
 
-  postActivity(activityDto:any) : Observable<any> {
-    return this.http.post(BASIC_URL + "api/activity", activityDto);
+  postGoal(goalDto: any): Observable<any> {
+    return this.http.post(BASIC_URL + 'api/goal', goalDto);
   }
 
-  getActivites() : Observable<any> {
-    return this.http.get(BASIC_URL + "api/activities");
+  getGoals(): Observable<any> {
+    return this.http.get(BASIC_URL + 'api/goals');
   }
 
-  postWorkout(workoutDto:any) : Observable<any> {
-    return this.http.post(BASIC_URL + "api/workout", workoutDto);
+  updateGoalStatus(id: number): Observable<any> {
+    return this.http.patch(BASIC_URL + 'api/goal/status/' + id, {
+      archived: true,
+    });
   }
 
-  getWorkouts() : Observable<any> {
-    return this.http.get(BASIC_URL + "api/workouts");
+  getStats(): Observable<any> {
+    return this.http.get(BASIC_URL + 'api/stats');
   }
 
-  postGoal(goalDto:any) : Observable<any> {
-    return this.http.post(BASIC_URL + "api/goal", goalDto);
-  }
-
-  getGoals() : Observable<any> {
-    return this.http.get(BASIC_URL + "api/goals");
-  }
-
-  updateGoalStatus(id:number) : Observable<any> {
-    return this.http.patch(BASIC_URL + "api/goal/status/"+id, {archived: true});
-  }
-
-  getStats() : Observable<any> {
-    return this.http.get(BASIC_URL + "api/stats");
-  }
-
-  getGraphStats() : Observable<any> {
-    return this.http.get(BASIC_URL + "api/graphs");
+  getGraphStats(): Observable<any> {
+    return this.http.get(BASIC_URL + 'api/graphs');
   }
 
   getWODs(): Observable<WOD[]> {
@@ -63,20 +58,20 @@ export class UserService {
 
   searchWODs(query: string): Observable<WOD[]> {
     return this.http.get<WOD[]>(BASIC_URL + 'api/wods/search', {
-      params: { searchTerm: query }
+      params: { searchTerm: query },
     });
   }
 
-    getWODById(id: number): Observable<WOD> {
-    return this.http.get<WOD>(BASIC_URL + 'api/wods/'+id);
+  getWODById(id: number): Observable<WOD> {
+    return this.http.get<WOD>(BASIC_URL + 'api/wods/' + id);
   }
 
-    createWOD(wod: WOD): Observable<WOD> {
+  createWOD(wod: WOD): Observable<WOD> {
     return this.http.post<WOD>(BASIC_URL + 'api/wods', wod);
   }
 
-    generateAndSaveWOD(data: {
-    name: string;  
+  generateAndSaveWOD(data: {
+    name: string;
     type: string;
     category: string;
     durationInMinutes: number;
@@ -85,8 +80,17 @@ export class UserService {
     return this.http.post<WOD>(BASIC_URL + 'api/wods/generate-and-save', data);
   }
 
-    saveWodResult(result: { wodId: number; durationInSeconds: number; reps: number }) {
-      return this.http.post(BASIC_URL + 'api/wod-results', result);
-    }
+  saveWodResult(result: {
+    wodId: number;
+    durationInSeconds: number;
+    reps: number;
+  }) {
+    return this.http.post(BASIC_URL + 'api/wod-results', result);
+  }
 
+  getWodResultsByWodId(wodId: number) {
+    return this.http.get<WodResultResponseDto[]>(
+      BASIC_URL + 'api/wod-results/wod/' + wodId
+    );
+  }
 }

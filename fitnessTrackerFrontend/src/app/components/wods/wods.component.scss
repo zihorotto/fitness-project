@@ -1,3 +1,48 @@
+// Mobilbarát, reszponzív stílusok
+@media (max-width: 700px) {
+  .wods-container {
+    padding: 8px;
+  }
+  .wods-search-form {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+  .wods-search-input {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px 12px;
+  }
+  .wods-search-button,
+  .search-button,
+  .lila-button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px 0;
+  }
+  .create-wod-submit-button,
+  .create-wod-button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px 0;
+    margin-bottom: 0.5rem;
+  }
+  .wods-grid,
+  .grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  .wod-card {
+    min-width: 0;
+    font-size: 0.97rem;
+    padding: 0.7rem 0.5rem;
+  }
+  h1,
+  h2,
+  h3 {
+    font-size: 1.2rem !important;
+  }
+}
 .wods-container {
   padding: 20px;
   text-align: center;
@@ -116,7 +161,7 @@
   transition: all 0.3s ease;
   color: #374151; /* alap szöveg szín */
   background-color: white;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 0.75rem;
 
   .hover-text {
@@ -133,7 +178,9 @@
     color: white;
     transform: translateY(-4px);
 
-    h3, p, div {
+    h3,
+    p,
+    div {
       color: white;
     }
 
@@ -143,7 +190,7 @@
 
     .hover-text {
       display: block;
-      color: black;  /* FONT COLOR explicitly white */
+      color: black; /* FONT COLOR explicitly white */
     }
   }
 }
@@ -226,7 +273,6 @@
   box-shadow: 0 6px 20px rgba(91, 33, 182, 0.5);
   transform: translateY(-2px);
 }
-
 
 /* CREATE WOD BUTTON - modern, rounded pill shape */
 .create-wod-button {

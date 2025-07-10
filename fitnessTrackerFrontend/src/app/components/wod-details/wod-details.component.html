@@ -4,40 +4,105 @@
 </div>
 
 <!-- WOD megjelenítés, ha nincs loading és van adat -->
-<div *ngIf="!loading && wod" class="max-w-2xl mx-auto mt-10 bg-white/70 p-6 rounded-2xl shadow-xl backdrop-blur-md border border-purple-200">
-
+<div
+  *ngIf="!loading && wod"
+  class="max-w-2xl mx-auto mt-10 bg-white/70 p-6 rounded-2xl shadow-xl backdrop-blur-md border border-purple-200"
+>
   <!-- Cím -->
-  <h1 class="text-4xl font-extrabold text-purple-800 mb-6 text-center drop-shadow-md">
+  <h1
+    class="text-4xl font-extrabold text-purple-800 mb-6 text-center drop-shadow-md"
+  >
     {{ wod.name }}
   </h1>
 
   <!-- WOD információk -->
   <div class="text-center text-purple-600 mb-8 space-y-1">
-    <span class="block font-medium">🏋️ Type: <span class="font-bold">{{ wod.type }}</span></span>
-    <span class="block font-medium">📂 Category: <span class="font-bold">{{ wod.category }}</span></span>
-    <span class="block font-medium">⏱ Duration: <span class="font-bold">{{ wod.durationInMinutes }} minutes</span></span>
+    <span class="block font-medium"
+      >🏋️ Type: <span class="font-bold">{{ wod.type }}</span></span
+    >
+    <span class="block font-medium"
+      >📂 Category: <span class="font-bold">{{ wod.category }}</span></span
+    >
+    <span class="block font-medium"
+      >⏱ Duration:
+      <span class="font-bold">{{ wod.durationInMinutes }} minutes</span></span
+    >
   </div>
 
   <!-- Rövid leírás -->
   <div class="mb-8">
-    <h2 class="text-2xl font-semibold text-purple-700 mb-2">Description</h2>
-    <p class="text-gray-900 whitespace-pre-line">{{ wod.description }}</p>
+    <h2 class="text-2xl font-semibold text-purple-700 mb-2 text-center">
+      Description
+    </h2>
+    <p class="text-gray-900 whitespace-pre-line text-center">
+      {{ wod.description }}
+    </p>
   </div>
 
   <!-- Teljes leírás, ha van -->
   <div *ngIf="wod.fullDescription">
-    <h2 class="text-2xl font-semibold text-purple-700 mb-2">Full Description</h2>
-    <p class="text-gray-900 whitespace-pre-line">{{ wod.fullDescription }}</p>
+    <h2 class="text-2xl font-semibold text-purple-700 mb-2 text-center">
+      Full Description
+    </h2>
+    <p class="text-gray-900 whitespace-pre-line text-center">
+      {{ wod.fullDescription }}
+    </p>
   </div>
 
   <!-- Edzés időzítő -->
   <div *ngIf="wod.type" class="mt-12 border-t border-purple-300 pt-6">
-    <h3 class="text-2xl font-bold text-purple-900 mb-4 text-center">🔥 Workout Timer</h3>
+    <h3 class="text-2xl font-bold text-purple-900 mb-4 text-center">
+      🔥 Workout Timer
+    </h3>
 
     <div class="flex flex-col items-center space-y-6">
+      <!-- Óra stílus választó -->
+      <button
+        (click)="toggleTimerStyle()"
+        class="mb-2 px-4 py-1 rounded-full border border-purple-400 bg-purple-50 text-purple-700 text-sm hover:bg-purple-100 transition"
+      >
+        Óra stílus: {{ timerStyle === "circle" ? "Kör" : "Digitális" }}
+      </button>
 
-      <!-- Idő kijelző -->
-      <div class="text-4xl font-mono text-pink-600 tracking-widest drop-shadow">
+      <!-- Kör alakú digitális progress bar óra -->
+      <div *ngIf="timerStyle === 'circle'" class="circle-timer-container">
+        <svg viewBox="0 0 120 120" class="circle-timer">
+          <circle
+            cx="60"
+            cy="60"
+            r="54"
+            fill="none"
+            stroke="#e9d5ff"
+            stroke-width="10"
+          />
+          <circle
+            cx="60"
+            cy="60"
+            r="54"
+            fill="none"
+            [attr.stroke]="'#a78bfa'"
+            stroke-width="10"
+            [attr.stroke-dasharray]="339.292"
+            [attr.stroke-dashoffset]="getCircleDashOffset()"
+            stroke-linecap="round"
+            style="transition: stroke-dashoffset 1s linear"
+            transform="rotate(-90 60 60)"
+          />
+          <text
+            x="60"
+            y="68"
+            text-anchor="middle"
+            font-size="28"
+            fill="#7c3aed"
+            font-weight="bold"
+          >
+            {{ displayTime }}
+          </text>
+        </svg>
+      </div>
+
+      <!-- Egyszerű digitális óra -->
+      <div *ngIf="timerStyle === 'digital'" class="timer-digital">
         {{ displayTime }}
       </div>
 
@@ -46,7 +111,7 @@
         class="bg-purple-700 text-white px-6 py-2 rounded-full hover:bg-purple-800 shadow-md transition duration-200"
         (click)="toggleTimer()"
       >
-        {{ timerRunning ? 'Pause ⏸' : 'Start ▶️' }}
+        {{ timerRunning ? "Pause ⏸" : "Start ▶️" }}
       </button>
       <button
         (click)="stopAndSave()"
@@ -63,7 +128,9 @@
         >
           +1 Rep
         </button>
-        <span class="text-lg font-medium text-purple-800">Reps: {{ reps }}</span>
+        <span class="text-lg font-medium text-purple-800"
+          >Reps: {{ reps }}</span
+        >
       </div>
 
       <!-- EMOM típusú edzés kör információ -->
@@ -72,11 +139,42 @@
       </div>
 
       <!-- Tabata típusú edzés kör és fázis információ -->
-      <div *ngIf="wod.type === 'Tabata'" class="text-sm text-purple-500 mt-2 text-center">
+      <div
+        *ngIf="wod.type === 'Tabata'"
+        class="text-sm text-purple-500 mt-2 text-center"
+      >
         🔄 Round: {{ tabataRound }} / 8 <br />
-        💥 Phase: <span class="font-semibold">{{ tabataPhase ? 'Work' : 'Rest' }}</span>
+        💥 Phase:
+        <span class="font-semibold">{{ tabataPhase ? "Work" : "Rest" }}</span>
       </div>
+    </div>
+  </div>
 
+  <!-- WOD eredmények szép kártyákban -->
+  <div *ngIf="previousResults.length > 0" class="wod-results-container">
+    <h2 class="wod-results-title">🏆 Previous Results</h2>
+    <div class="wod-results-grid">
+      <div *ngFor="let result of previousResults" class="wod-result-card">
+        <div class="wod-result-row">
+          <span class="wod-result-label">⏱ Duration:</span>
+          <span class="wod-result-value">{{
+            formatTime(result.durationInSeconds)
+          }}</span>
+        </div>
+        <div
+          *ngIf="
+            wod.type.toLowerCase() === 'amrap' ||
+            wod.type.toLowerCase() === 'fortime'
+          "
+          class="wod-result-row"
+        >
+          <span class="wod-result-label">🔁 Reps:</span>
+          <span class="wod-result-value">{{ result.reps }}</span>
+        </div>
+        <div class="wod-result-date">
+          <span>Saved on: {{ result.savedAt | date : "medium" }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

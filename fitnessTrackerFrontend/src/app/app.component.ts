@@ -11,4 +11,5 @@ import { SharedModule } from './shared/shared.module';
 })
 export class AppComponent {
   title = 'fitnessTrackerFrontend';
+  sideMenuCollapsed = true;
 }

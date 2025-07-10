@@ -1,5 +1,11 @@
-import { CommonModule, DatePipe, isPlatformBrowser  } from '@angular/common';
-import { Component, ElementRef, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, DatePipe, isPlatformBrowser } from '@angular/common';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { UserService } from '../../service/user.service';
 import {
@@ -13,7 +19,7 @@ import {
   Title,
   Tooltip,
   Legend,
-  PointElement
+  PointElement,
 } from 'chart.js';
 
 Chart.register(
@@ -34,127 +40,91 @@ Chart.register(
   imports: [CommonModule, SharedModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
-  providers: [DatePipe]
+  providers: [DatePipe],
 })
 export class DashboardComponent {
 
-  statsData:any;
+  // Helper to detect mobile (for template binding)
+  isMobile(): boolean {
+    return window.innerWidth <= 700;
+  }
 
-  workouts: any;
-  activities: any;
+  statsData: any;
+  wods: any[] = [];
+  wodResults: { [wodId: number]: any[] } = {};
+  loadingWods = false;
+  totalLoggedMinutes: number = 0;
 
-  @ViewChild('workoutLineChart') private workoutLineChartRef:ElementRef;
-  @ViewChild('activityLineChart') private activityLineChartRef:ElementRef;
+  // Side menu state for responsive sidebar (mobile/desktop)
+  sideMenuCollapsed: boolean = true;
+
+  @ViewChild('workoutLineChart') private workoutLineChartRef: ElementRef;
+  @ViewChild('activityLineChart') private activityLineChartRef: ElementRef;
 
 
   constructor(
-  private userService: UserService,
-  @Inject(PLATFORM_ID) private platformId: Object,
-  private datePipe: DatePipe,
-) {}
+    private userService: UserService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private datePipe: DatePipe
+  ) {}
 
-ngOnInit() {
-  if (isPlatformBrowser(this.platformId)) {
-    this.getStats();
-    this.getGraphStats();
-  }
-}
-
-  getGraphStats(){
-    this.userService.getGraphStats().subscribe(res => {
-      this.workouts = res.workouts;
-      this.activities = res.activities;
-      console.log(this.workouts, this.activities);
-      if(this.workoutLineChartRef || this.activityLineChartRef) {
-        this.createLineChart();
-      }
-    })
+  // Open sidebar (on hover/tap)
+  openSideMenu() {
+    this.sideMenuCollapsed = false;
   }
 
-  ngAfterViewInit() {
-    if(this.workouts && this.activities) {
-      this.createLineChart();
+  // Close sidebar (on mouseleave/touchend)
+  closeSideMenu() {
+    this.sideMenuCollapsed = true;
+  }
+
+  // Format seconds to mm:ss (for WOD results)
+  formatTime(seconds: number): string {
+    const min = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, '0');
+    const sec = (seconds % 60).toString().padStart(2, '0');
+    return `${min}:${sec}`;
+  }
+
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadWods();
     }
   }
 
-  createLineChart() {
-    const workoutCtx = this.workoutLineChartRef.nativeElement.getContext('2d');
-    const activityCtx = this.activityLineChartRef.nativeElement.getContext('2d');
-
-     new Chart(workoutCtx, {
-        type: 'line',
-        data: {
-          labels: this.workouts.map((data: {date:any;}) =>this.datePipe.transform(data.date, 'MM/dd')),
-          datasets: [{
-            label: 'Calories Burned',
-            data: this.workouts.map((data: {caloriesBurned:any;}) => data.caloriesBurned),
-            fill: false,
-              borderWidth: 2,
-              backgroundColor: 'rgba(80, 200, 120, 0.6)',
-              borderColor: 'rgba(0, 100, 0, 1)',
-          },
-        {
-            label: 'Duration',
-            data: this.workouts.map((data: {duration:any;}) => data.duration),
-            fill: false,
-              borderWidth: 2,
-              backgroundColor: 'rgba(120, 180, 200, 0.6)',
-              borderColor: 'rgba(0, 100, 150, 1)',
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
+  loadWods() {
+    this.loadingWods = true;
+    this.userService.getWODs().subscribe({
+      next: (wods) => {
+        // Only WODs with results
+        const wodFetches = wods.map((wod) =>
+          this.userService
+            .getWodResultsByWodId(wod.id)
+            .toPromise()
+            .then((results) => ({ wod, results }))
+        );
+        Promise.all(wodFetches).then((wodResultsArr) => {
+          this.wods = wodResultsArr
+            .filter((x) => x.results && x.results.length > 0)
+            .map((x) => x.wod);
+          this.wodResults = {};
+          this.totalLoggedMinutes = 0;
+          wodResultsArr.forEach((x) => {
+            if (x.results && x.results.length > 0) {
+              this.wodResults[x.wod.id] = x.results;
+              this.totalLoggedMinutes += x.results.reduce(
+                (sum, r) => sum + Math.round((r.durationInSeconds || 0) / 60),
+                0
+              );
             }
-          }
-        }
-      });
-     new Chart(activityCtx, {
-        type: 'line',
-        data: {
-          labels: this.activities.map((data: {date:any;}) =>this.datePipe.transform(data.date, 'MM/dd')),
-          datasets: [{
-            label: 'Calories Burned',
-            data: this.activities.map((data: {caloriesBurned:any;}) => data.caloriesBurned),
-            fill: false,
-              borderWidth: 2,
-              backgroundColor: 'rgba(255, 100, 100, 0.6)',
-              borderColor: 'rgba(255, 0, 0, 1)',
-          },
-         {
-            label: 'Steps',
-            data: this.activities.map((data: {steps: any;}) => data.steps),
-            fill: false,
-              borderWidth: 2,
-              backgroundColor: 'rgba(255, 180, 120, 0.6)',
-              borderColor: 'rgba(255, 100, 0, 1)',
-          },
-          {
-            label: 'Distance',
-            data: this.activities.map((data: {distance: any;}) => data.distance),
-            fill: false,
-              borderWidth: 2,
-              backgroundColor: 'rgba(255, 180, 120, 0.6)',
-              borderColor: 'rgba(255, 100, 0, 1)',
-          }
-        ]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-
+          });
+          this.loadingWods = false;
+        });
+      },
+      error: () => {
+        this.loadingWods = false;
+      },
+    });
   }
-
-  getStats(){
-    this.userService.getStats().subscribe(res => {
-      this.statsData = res;
-    })
-  }
-
 }

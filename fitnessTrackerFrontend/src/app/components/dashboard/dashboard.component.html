@@ -1,50 +1,127 @@
-<div nz-row>
-    <div nz-col [nzXs]="{ span: 5, offset: 1 }" [nzLg]="{ span: 6, offset: 2}">
-        <nz-card nzTitle="Total Calories Burned" style="background-color: aliceblue;">
-            <p>{{ statsData?.totalCaloriesBurned }} cal</p>
-        </nz-card>
-    </div>
-    <div nz-col [nzXs]="{ span: 11, offset: 1 }" [nzLg]="{ span: 6, offset: 2}">
-        <nz-card nzTitle="Total Distance Covered" style="background-color: aliceblue;">
-            <p>{{ statsData?.distance | number:'1.1-1' }} Km</p>
-        </nz-card>
-    </div>
-    <div nz-col [nzXs]="{ span: 5, offset: 1 }" [nzLg]="{ span: 6, offset: 2}">
-        <nz-card nzTitle="Total Steps Taken" style="background-color: aliceblue;">
-            <p>{{ statsData?.steps}}</p>
-        </nz-card>
-    </div>
-</div>
+<!-- WOD statistics and logged WODs only -->
+<!-- Side hover/tap strip for mobile/desktop menu access -->
+<div
+  class="side-hover-strip"
+  *ngIf="sideMenuCollapsed"
+  (mouseenter)="openSideMenu()"
+  (touchstart)="openSideMenu()"
+  tabindex="0"
+  aria-label="Open menu"
+></div>
 
-<div nz-row style="margin-top: 20px;">
-    <div nz-col [nzXs]="{ span: 5, offset: 1 }" [nzLg]="{ span: 6, offset: 2}">
-        <nz-card nzTitle="Total Time Spent" style="background-color: aliceblue;">
-            <p>{{ statsData?.duration}} min</p>
-        </nz-card>
-    </div>
-    <div nz-col [nzXs]="{ span: 5, offset: 1 }" [nzLg]="{ span: 6, offset: 2}">
-        <nz-card nzTitle="Achieved Goals" style="background-color: aliceblue;">
-            <p>{{ statsData?.achievedGoals}} min</p>
-        </nz-card>
-    </div>
-    <div nz-col [nzXs]="{ span: 5, offset: 1 }" [nzLg]="{ span: 6, offset: 2}">
-        <nz-card nzTitle="Not Achieved Goals" style="background-color: aliceblue;">
-            <p>{{ statsData?.notAchievedGoals}} min</p>
-        </nz-card>
-    </div>
-</div>
+<!-- Side menu (example, adjust selector/logic as needed) -->
+<nav
+  class="side-menu"
+  *ngIf="!sideMenuCollapsed"
+  (mouseleave)="closeSideMenu()"
+  (touchend)="closeSideMenu()"
+  tabindex="0"
+  aria-label="Side menu"
+>
+  <!-- Menü tartalma ide jön -->
+</nav>
+<div class="dashboard-wods-container container mx-auto px-6 py-8 max-w-7xl">
+  <h1 class="text-3xl font-extrabold mb-6 text-center text-purple-900">
+    WOdboard
+  </h1>
 
-<div nz-row style="margin-top: 15px;">
-    <div nz-col nzXs="2" nzSm="4" nzMd="6" nzLg="8" nzXl="10">
-        <nz-card nzTitle="Recent Workouts" style="background-color: aliceblue;">
-            <canvas #workoutLineChart></canvas>
-        </nz-card>
-    </div>
-    <div nz-col nzXs="20" nzSm="16" nzMd="12" nzLg="8" nzXl="4"></div>
-    <div nz-col nzXs="2" nzSm="4" nzMd="6" nzLg="8" nzXl="10">
-        <nz-card nzTitle="Recent Activities" style="background-color: aliceblue;">
-            <canvas #activityLineChart></canvas>
-        </nz-card>
+  <div *ngIf="loadingWods" class="text-center my-8">
+    <span class="text-purple-400 animate-pulse">Loading WODs...</span>
+  </div>
+
+  <div *ngIf="!loadingWods && wods.length === 0" class="text-center my-8">
+    <span class="text-gray-500">No WODs with results found.</span>
+  </div>
+
+  <div *ngIf="!loadingWods && wods.length > 0">
+    <div class="mb-8 flex flex-col items-center">
+      <div class="font-bold text-lg text-purple-800 mb-2">
+        Total logged minutes:
+      </div>
+      <div class="w-64 h-64 relative flex items-center justify-center">
+        <svg viewBox="0 0 200 200" class="absolute top-0 left-0 w-full h-full">
+          <circle cx="100" cy="100" r="90" fill="#ede9fe" />
+          <ng-container *ngIf="totalLoggedMinutes > 5">
+            <circle
+              cx="100"
+              cy="100"
+              r="90"
+              fill="none"
+              stroke="#a78bfa"
+              stroke-width="16"
+              stroke-dasharray="565.48"
+              [attr.stroke-dashoffset]="
+                565.48 -
+                (totalLoggedMinutes > 500
+                  ? 565.48
+                  : (totalLoggedMinutes / 500) * 565.48)
+              "
+              stroke-linecap="butt"
+            />
+          </ng-container>
+        </svg>
+        <span class="text-4xl font-extrabold text-purple-700 z-10">{{ totalLoggedMinutes }}</span>
+        <span class="absolute bottom-8 left-1/2 -translate-x-1/2 text-purple-500 font-semibold">minutes</span>
+      </div>
     </div>
 
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div
+        *ngFor="let wod of wods"
+        class="wod-card bg-white rounded-xl shadow-lg overflow-hidden flex flex-col cursor-pointer hover:shadow-xl transition"
+        [routerLink]="['/wod-details', wod.id]"
+      >
+        <div class="px-6 py-4 flex-grow">
+          <h3 class="text-xl font-bold mb-2 text-gray-900 text-center">{{ wod.name }}</h3>
+          <p class="text-gray-700 text-sm" style="white-space: pre-line">
+            {{ wod.description }}
+          </p>
+          <div class="mt-2 text-xs text-purple-700">
+            <span class="mr-2"
+              >Type: <b>{{ wod.type }}</b></span
+            >
+            <span class="mr-2"
+              >Category: <b>{{ wod.category }}</b></span
+            >
+            <span
+              >Duration: <b>{{ wod.durationInMinutes }} min</b></span
+            >
+          </div>
+        </div>
+        <div
+          class="px-6 py-4 bg-gray-50 border-t border-gray-200 text-gray-600 text-xs font-semibold"
+        >
+          <div *ngIf="wodResults[wod.id]?.length > 0">
+            <div class="font-bold text-purple-800 mb-1">Recent results:</div>
+            <div class="wod-results-grid">
+              <div
+                *ngFor="let result of wodResults[wod.id] | slice : 0 : 2"
+                class="wod-result-card mb-2"
+              >
+                <div class="wod-result-row">
+                  <span class="wod-result-label">⏱ Time: </span>
+                  <span class="wod-result-value">{{
+                    formatTime(result.durationInSeconds)
+                  }}</span>
+                </div>
+                <div
+                  *ngIf="
+                    wod.type.toLowerCase() === 'amrap' ||
+                    wod.type.toLowerCase() === 'fortime'
+                  "
+                  class="wod-result-row"
+                >
+                  <span class="wod-result-label">🔁 Reps: </span>
+                  <span class="wod-result-value">{{ result.reps }}</span>
+                </div>
+                <div class="wod-result-date">
+                  <span>Saved: {{ result.savedAt | date : "medium" }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

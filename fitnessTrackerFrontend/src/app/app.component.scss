@@ -58,3 +58,85 @@ nz-content {
 nz-footer {
     text-align: center;
 }
+
+.side-toggle-btn {
+  position: fixed;
+  top: 18px;
+  left: 210px;
+  z-index: 1001;
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  padding: 8px 16px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px 0 #a78bfa22;
+  transition: background 0.2s;
+}
+.side-toggle-btn:hover {
+  background: #5b21b6;
+}
+
+.side-hover-strip {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 100vh;
+  background: linear-gradient(90deg, #a78bfa 70%, #ede9fe 100%);
+  z-index: 1100;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+  touch-action: manipulation;
+}
+.side-hover-strip:hover {
+  opacity: 1;
+}
+@media (max-width: 900px) {
+  .side-hover-strip {
+    width: 38px;
+    min-width: 38px;
+    max-width: 38px;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    background: #a78bfa;
+    opacity: 1;
+    z-index: 1100;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: 2px 0 8px 0 #a78bfa33;
+    touch-action: manipulation;
+    display: block;
+  }
+  nz-sider {
+    min-width: 220px !important;
+    max-width: 80vw;
+    width: 220px !important;
+    left: 0;
+    top: 0;
+    z-index: 1200;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    box-shadow: 2px 0 12px 0 #a78bfa33;
+  }
+  .right-layout {
+    margin-left: 0 !important;
+  }
+}
+@media (max-width: 600px) {
+  .side-hover-strip {
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+    border-radius: 0 16px 16px 0;
+  }
+  nz-sider {
+    min-width: 80vw !important;
+    width: 80vw !important;
+    max-width: 90vw;
+    border-radius: 0 18px 18px 0;
+  }
+}
