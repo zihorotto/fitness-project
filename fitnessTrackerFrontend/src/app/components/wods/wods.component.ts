@@ -42,7 +42,7 @@ export class WodsComponent implements OnInit {
   createSectionVisible = false; // <<< Hozzáadva
 
   categories = ['Strength', 'Endurance', 'Mobility', 'Cardio'];
-  types = ['AMRAP', 'For Time', 'EMOM', 'Tabata'];
+  types = ['AMRAP', 'For Time', 'EMOM', 'Tabata', 'Benchmark'];
 
   constructor(
     private fb: FormBuilder,
@@ -125,7 +125,8 @@ export class WodsComponent implements OnInit {
         this.creating = false;
         this.getAllWODs();
       },
-      error: () => {
+      error: (err) => {
+         console.error('Create WOD error: ', err);
         this.message.error('Error while creating WOD.');
         this.creating = false;
       },

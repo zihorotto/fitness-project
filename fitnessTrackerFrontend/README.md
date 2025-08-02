@@ -25,3 +25,24 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+---
+
+🖼️ Project Screenshots
+
+Below are some screenshots illustrating the project:
+
+![Create Wod](./public/create.jpg)
+
+![Wod 1](./public/wod1.jpg)
+
+![Wod 2](./public/wod2.jpg)
+
+![Wods](./public/wods.jpg)
+
+![Wod Board](./public/wodboard.jpg)
+
+![Timer](./public/timer.jpg)
+
+
+---
