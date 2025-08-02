@@ -22,6 +22,24 @@
 - PostgreSQL (or Docker)
 - Internet connection (for model download on first run)
 
+🖼️ Project Screenshots / 🖼️ Projektscreenshots
+
+Below are some screenshots illustrating the project: /
+Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
+
+![Create Wod](./fitnessTrackerFrontend/public/create.jpg)
+
+![Wod 1](./fitnessTrackerFrontend/public/wod1.jpg)
+
+![Wod 2](./fitnessTrackerFrontend/public/wod2.jpg)
+
+![Wods](./fitnessTrackerFrontend/public/wods.jpg)
+
+![Wod Board](./fitnessTrackerFrontend/public/wodboard.jpg)
+
+![Timer](./fitnessTrackerFrontend/public/timer.jpg)
+
+
 ### Local Setup – Step by Step
 
 1. **Clone the repository**
