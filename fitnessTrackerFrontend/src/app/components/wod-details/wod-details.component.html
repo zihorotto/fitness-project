@@ -181,6 +181,22 @@
     </div>
   </div>
 
+  <!-- Hangvezérlés gombok -->
+  <div class="voice-controls mt-4 text-center">
+    <button
+      class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 shadow-md transition duration-200"
+      (click)="startVoiceRecognition()"
+    >
+      Start Voice Recognition 🎙️
+    </button>
+    <button
+      class="bg-gray-500 text-white px-4 py-2 rounded-full hover:bg-gray-600 shadow-md transition duration-200"
+      (click)="stopVoiceRecognition()"
+    >
+      Stop Voice Recognition 🛑
+    </button>
+  </div>
+
   <!-- WOD eredmények szép kártyákban -->
   <div *ngIf="previousResults.length > 0" class="wod-results-container">
     <h2 class="wod-results-title">🏆 Previous Results</h2>
@@ -207,22 +223,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Hangvezérlés gombok -->
-  <div class="voice-controls mt-4">
-    <button
-      class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 shadow-md transition duration-200"
-      (click)="startVoiceRecognition()"
-    >
-      Start Voice Recognition 🎙️
-    </button>
-    <button
-      class="bg-gray-500 text-white px-4 py-2 rounded-full hover:bg-gray-600 shadow-md transition duration-200"
-      (click)="stopVoiceRecognition()"
-    >
-      Stop Voice Recognition 🛑
-    </button>
   </div>
 
   <style>
