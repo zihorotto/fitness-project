@@ -87,6 +87,7 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
     const type = this.wod.type.replace(/\s+/g, '').toLowerCase();
     if (type === 'amrap') {
       const totalSeconds = this.wod.durationInMinutes * 60;
+      this.secondsLeft = totalSeconds; // Initialize secondsLeft for countdown
       this.displayTime = this.formatTime(totalSeconds);
       this.showReps = true;
     } else if (type === 'fortime') {
@@ -167,10 +168,11 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
 
     this.timerRunning = true;
     const type = this.wod.type.replace(/\s+/g, '').toLowerCase();
+    const totalSeconds = this.wod.durationInMinutes * 60; // Calculate total duration in seconds
 
     if (type === 'amrap') {
       if (this.secondsLeft === 0) {
-        this.secondsLeft = this.wod.durationInMinutes * 60;
+        this.secondsLeft = totalSeconds;
       }
       this.timer = setInterval(() => {
         this.secondsLeft--;
@@ -178,8 +180,10 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
         this.displayTime = this.formatTime(this.secondsLeft);
         this.cdr.detectChanges(); // Trigger change detection
         console.log(`Timer running: ${this.displayTime}`);
+
         if (this.secondsLeft <= 0) {
-          this.stopTimer();
+          console.log('Duration reached. Stopping timer and saving result.');
+          this.stopAndSave();
         }
       }, 1000);
     } else if (type === 'fortime') {
@@ -188,6 +192,11 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
         this.displayTime = this.formatTime(this.elapsedSeconds);
         this.cdr.detectChanges(); // Trigger change detection
         console.log(`Timer running: ${this.displayTime}`);
+
+        if (this.elapsedSeconds >= totalSeconds) {
+          console.log('Duration reached. Stopping timer and saving result.');
+          this.stopAndSave();
+        }
       }, 1000);
     } else if (type === 'emom') {
       this.timer = setInterval(() => {
@@ -195,10 +204,14 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
         this.displayTime = this.formatTime(this.elapsedSeconds);
         this.cdr.detectChanges(); // Trigger change detection
         console.log(`Timer running: ${this.displayTime}`);
+
         if (this.elapsedSeconds % 60 === 0) {
           this.emomRound++;
           if (this.emomRound >= this.emomTotalRounds) {
-            this.stopTimer();
+            console.log(
+              'EMOM rounds completed. Stopping timer and saving result.'
+            );
+            this.stopAndSave();
           }
         }
       }, 1000);
@@ -220,7 +233,10 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
             this.tabataRound++;
             this.secondsLeft = 20;
             if (this.tabataRound > totalRounds) {
-              this.stopTimer();
+              console.log(
+                'Tabata rounds completed. Stopping timer and saving result.'
+              );
+              this.stopAndSave();
             }
           }
         }
@@ -284,35 +300,41 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
 
     this.stopTimer();
 
-    const wodResult = {
-      wodId: this.wod.id,
-      durationInSeconds: this.elapsedSeconds,
-      reps: this.reps,
-    };
-    console.log('Saving WOD Result:', {
-      wodId: this.wod.id,
-      durationInSeconds: this.elapsedSeconds,
-      reps: this.reps,
-    });
+    // Display 'Well Done!' effect
+    this.displayTime = 'Done!';
+    this.cdr.detectChanges(); // Trigger change detection to update the UI
 
-    this.userService.saveWodResult(wodResult).subscribe({
-      next: () => {
-        this.snackBar.open('Workout result saved successfully!', 'Bezár', {
-          duration: 3000, // 3 másodperc és eltűnik
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-        });
-        this.getWodResults(this.wod.id);
-        this.resetTimerState();
-      },
-      error: (err) => {
-        this.snackBar.open('Failed to save workout result.', 'Bezár', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-        });
-      },
-    });
+    setTimeout(() => {
+      const wodResult = {
+        wodId: this.wod.id,
+        durationInSeconds: this.elapsedSeconds,
+        reps: this.reps,
+      };
+      console.log('Saving WOD Result:', {
+        wodId: this.wod.id,
+        durationInSeconds: this.elapsedSeconds,
+        reps: this.reps,
+      });
+
+      this.userService.saveWodResult(wodResult).subscribe({
+        next: () => {
+          this.snackBar.open('Workout result saved successfully!', 'Bezár', {
+            duration: 3000, // 3 másodperc és eltűnik
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+          this.getWodResults(this.wod.id);
+          this.resetTimerState();
+        },
+        error: (err) => {
+          this.snackBar.open('Failed to save workout result.', 'Bezár', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+        },
+      });
+    }, 2000); // Keep 'Well Done!' visible for 2 seconds before resetting
   }
 
   // Reset timer and related state to initial values for the current WOD type
