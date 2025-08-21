@@ -1,40 +1,20 @@
 <nz-layout class="layout">
-  <div class="side-hover-strip" (mouseenter)="sideMenuCollapsed = false"></div>
-  <nz-sider
-    [nzCollapsible]="true"
-    [nzCollapsed]="sideMenuCollapsed"
-    [nzBreakpoint]="'md'"
-    [nzWidth]="200"
-    [nzCollapsedWidth]="0"
-    (mouseleave)="sideMenuCollapsed = true"
-  >
-    <div class="logo">
-      <img
-        src="https://static.vecteezy.com/system/resources/previews/009/749/751/original/avatar-man-icon-cartoon-male-profile-mascot-illustration-head-face-business-user-logo-free-vector.jpg"
-        alt="avatar"
-        class="avatar"
-      />
-      <div class="user-info">
-        <strong>WODerbär</strong>
-      </div>
-    </div>
-
-    <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-menu-item routerLink="/wods">
-        <span nz-icon nzType="fire"></span>
-        <span>WODs</span>
-      </li>
-
-      <li nz-menu-item routerLink="/dashboard">
-        <span nz-icon nzType="dashboard"></span>
-        <span>WodBoard</span>
-      </li>
-    </ul>
-  </nz-sider>
-
   <nz-layout class="right-layout">
     <nz-content>
       <router-outlet></router-outlet>
     </nz-content>
   </nz-layout>
+
+  <button class="hamburger-menu" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="menu" [class.open]="menuOpen">
+    <ul>
+      <li><a routerLink="/wods">WODs</a></li>
+      <li><a routerLink="/dashboard">WodBoard</a></li>
+    </ul>
+  </div>
 </nz-layout>

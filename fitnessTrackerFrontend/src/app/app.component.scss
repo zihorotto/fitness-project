@@ -140,3 +140,76 @@ nz-footer {
     border-radius: 0 18px 18px 0;
   }
 }
+
+.hamburger-menu {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  right: auto;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger-menu span {
+  width: 100%;
+  height: 3px;
+  background: #333;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  right: auto;
+  width: 200px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: left 0.3s;
+}
+
+.menu.open {
+  left: 0;
+}
+
+.menu ul {
+  position: absolute;
+  top: 80px;
+  width: 100%;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.menu ul li {
+  margin: 15px 0;
+  list-style: none;
+}
+
+.menu ul li a {
+  display: inline-block;
+  width: 80%;
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #7c3aed, #5b21b6);
+  transition: transform 0.3s, background 0.3s;
+  text-align: center;
+}
+
+.menu ul li a:hover {
+  background: linear-gradient(90deg, #5b21b6, #7c3aed);
+  transform: scale(1.05);
+}

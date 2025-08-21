@@ -50,12 +50,19 @@
   </div>
 
   <!-- Edzés időzítő -->
-  <div *ngIf="wod.type" class="mt-12 border-t border-purple-300 pt-6">
+  <div *ngIf="wod.type" class="mt-12 border-t border-purple-300 pt-6 relative">
     <h3 class="text-2xl font-bold text-purple-900 mb-4 text-center">
       🔥 Workout Timer
     </h3>
 
     <div class="flex flex-col items-center space-y-6">
+      <!-- Visszaszámláló overlay -->
+      <div *ngIf="countdownValue >= 0" class="countdown-overlay animate">
+        <div class="countdown-number animate">
+          {{ countdownValue > 0 ? countdownValue : "Go!" }}
+        </div>
+      </div>
+
       <!-- Óra stílus választó -->
       <button
         (click)="toggleTimerStyle()"
@@ -107,19 +114,43 @@
       </div>
 
       <!-- Indítás / Szünet gomb -->
-      <button
-        class="bg-purple-700 text-white px-6 py-2 rounded-full hover:bg-purple-800 shadow-md transition duration-200"
-        (click)="toggleTimer()"
-      >
-        {{ timerRunning ? "Pause ⏸" : "Start ▶️" }}
-      </button>
-      <button
-        (click)="stopAndSave()"
-        [disabled]="!timerRunning && elapsedSeconds === 0"
-        class="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 shadow-md transition duration-200 ml-4"
-      >
-        Stop & Save ⏹
-      </button>
+      <div class="button-group">
+        <!-- Start Button -->
+        <button
+          *ngIf="!timerRunning && elapsedSeconds === 0"
+          class="bg-purple-700 text-white px-6 py-2 rounded-full hover:bg-purple-800 shadow-md transition duration-200"
+          (click)="toggleTimer()"
+        >
+          Start ▶️
+        </button>
+
+        <!-- Pause Button -->
+        <button
+          *ngIf="timerRunning"
+          class="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 shadow-md transition duration-200"
+          (click)="pauseTimer()"
+        >
+          Pause ⏸
+        </button>
+
+        <!-- Continue Button -->
+        <button
+          *ngIf="!timerRunning && elapsedSeconds > 0"
+          class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 shadow-md transition duration-200"
+          (click)="toggleTimer()"
+        >
+          Continue ▶️
+        </button>
+
+        <!-- Stop & Save Button -->
+        <button
+          class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 shadow-md transition duration-200"
+          (click)="stopAndSave()"
+        >
+          Stop & Save 💾
+        </button>
+      </div>
+
       <!-- Ismétlések kezelése -->
       <div class="flex items-center space-x-4 mt-4" *ngIf="showReps">
         <button
@@ -177,4 +208,73 @@
       </div>
     </div>
   </div>
+
+  <!-- Hangvezérlés gombok -->
+  <div class="voice-controls mt-4">
+    <button
+      class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 shadow-md transition duration-200"
+      (click)="startVoiceRecognition()"
+    >
+      Start Voice Recognition 🎙️
+    </button>
+    <button
+      class="bg-gray-500 text-white px-4 py-2 rounded-full hover:bg-gray-600 shadow-md transition duration-200"
+      (click)="stopVoiceRecognition()"
+    >
+      Stop Voice Recognition 🛑
+    </button>
+  </div>
+
+  <style>
+    .countdown-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+    }
+
+    .countdown-number {
+      font-size: 8rem;
+      color: #ffcc00;
+      font-weight: bold;
+      text-shadow: 0 0 20px #ffcc00, 0 0 30px #ff9900;
+      animation: pulse 1s infinite;
+    }
+
+    .cancel-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1.5rem;
+      color: white;
+      background-color: #ff4d4d;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .cancel-button:hover {
+      background-color: #e60000;
+      transform: scale(1.1);
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+      }
+    }
+  </style>
 </div>
