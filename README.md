@@ -6,9 +6,9 @@
 
 - **Frontend:** Angular 18, Ng-Zorro, Chart.js, Tailwind CSS
 - **Backend:** Spring Boot (Java 17+), Spring Security, PostgreSQL
-- **AI Service:** Python (Flask), HuggingFace Transformers (T5 model)
+- **AI Integration:** OpenAPI (GPT-4)
 - **Communication:** REST API (JSON)
-- **Other:** Docker (optional for DB), virtualenv (Python)
+- **Other:** Docker (optional for DB)
 
 ### Requirements
 
@@ -17,10 +17,8 @@
 - Angular CLI (`npm install -g @angular/cli`)
 - Java 17+
 - Maven
-- Python 3.10+
-- pip
 - PostgreSQL (or Docker)
-- Internet connection (for model download on first run)
+- OpenAPI API Key (for AI-generated WODs)
 
 🖼️ Project Screenshots / 🖼️ Projektscreenshots
 
@@ -49,34 +47,14 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
    cd Fitness
    ```
 
-2. **AI Service (Python)**
-
-   - Go to `ai-service`:
-     ```bash
-     cd ai-service
-     ```
-   - Create and activate virtualenv:
-     ```bash
-     python -m venv wod-env
-     .\wod-env\Scripts\Activate.ps1   # Windows PowerShell
-     ```
-   - Install dependencies:
-     ```bash
-     pip install flask flask_cors transformers torch
-     ```
-   - Start the AI service:
-     ```bash
-     python app.py
-     ```
-   - The service runs on [http://127.0.0.1:5000](http://127.0.0.1:5000)
-
-3. **Backend (Spring Boot)**
+2. **Backend (Spring Boot)**
 
    - Go to `fitnessTrackerBackend`:
      ```bash
-     cd ../fitnessTrackerBackend
+     cd fitnessTrackerBackend
      ```
    - Configure your PostgreSQL connection in `src/main/resources/application.properties`.
+   - Add your OpenAPI API key to the application properties or environment variables.
    - Start PostgreSQL locally or with Docker:
      ```bash
      docker run --name fitness-postgres -e POSTGRES_PASSWORD=yourpw -e POSTGRES_DB=fitness -p 5432:5432 -d postgres
@@ -89,11 +67,11 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
      ```
    - The backend runs on [http://localhost:8080](http://localhost:8080)
 
-4. **Frontend (Angular)**
+3. **Frontend (Angular)**
 
    - Go to `fitnessTrackerFrontend`:
      ```bash
-     cd ../fitnessTrackerFrontend
+     cd fitnessTrackerFrontend
      ```
    - Install dependencies:
      ```bash
@@ -105,9 +83,9 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
      ```
    - The app runs on [http://localhost:4200](http://localhost:4200)
 
-5. **Usage**
+4. **Usage**
    - Open the frontend in your browser.
-   - For AI-generated WODs, both backend and AI service must be running.
+   - AI-generated WODs are powered by OpenAPI integration in the backend.
 
 ---
 
@@ -117,9 +95,9 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
 
 - **Frontend:** Angular 18, Ng-Zorro, Chart.js, Tailwind CSS
 - **Backend:** Spring Boot (Java 17+), Spring Security, PostgreSQL
-- **AI-Service:** Python (Flask), HuggingFace Transformers (T5 Modell)
+- **KI-Integration:** OpenAPI (GPT-4)
 - **Kommunikation:** REST API (JSON)
-- **Sonstiges:** Docker (optional für DB), virtualenv (Python)
+- **Sonstiges:** Docker (optional für DB)
 
 ### Voraussetzungen
 
@@ -128,10 +106,8 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
 - Angular CLI (`npm install -g @angular/cli`)
 - Java 17+
 - Maven
-- Python 3.10+
-- pip
 - PostgreSQL (oder Docker)
-- Internetverbindung (für Modelldownload beim ersten Start)
+- OpenAPI API Key (für KI-generierte WODs)
 
 ### Lokale Einrichtung – Schritt für Schritt
 
@@ -142,34 +118,14 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
    cd Fitness
    ```
 
-2. **AI-Service (Python)**
-
-   - Wechsle in das Verzeichnis `ai-service`:
-     ```bash
-     cd ai-service
-     ```
-   - Erstelle und aktiviere ein virtuelles Environment:
-     ```bash
-     python -m venv wod-env
-     .\wod-env\Scripts\Activate.ps1   # Windows PowerShell
-     ```
-   - Installiere die Abhängigkeiten:
-     ```bash
-     pip install flask flask_cors transformers torch
-     ```
-   - Starte den AI-Service:
-     ```bash
-     python app.py
-     ```
-   - Der Service läuft auf [http://127.0.0.1:5000](http://127.0.0.1:5000)
-
-3. **Backend (Spring Boot)**
+2. **Backend (Spring Boot)**
 
    - Wechsle in das Verzeichnis `fitnessTrackerBackend`:
      ```bash
-     cd ../fitnessTrackerBackend
+     cd fitnessTrackerBackend
      ```
    - Konfiguriere deine PostgreSQL-Verbindung in `src/main/resources/application.properties`.
+   - Füge deinen OpenAPI API Key zu den Application Properties oder Umgebungsvariablen hinzu.
    - Starte PostgreSQL lokal oder mit Docker:
      ```bash
      docker run --name fitness-postgres -e POSTGRES_PASSWORD=deinpasswort -e POSTGRES_DB=fitness -p 5432:5432 -d postgres
@@ -182,11 +138,11 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
      ```
    - Das Backend läuft auf [http://localhost:8080](http://localhost:8080)
 
-4. **Frontend (Angular)**
+3. **Frontend (Angular)**
 
    - Wechsle in das Verzeichnis `fitnessTrackerFrontend`:
      ```bash
-     cd ../fitnessTrackerFrontend
+     cd fitnessTrackerFrontend
      ```
    - Installiere die Abhängigkeiten:
      ```bash
@@ -198,8 +154,8 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
      ```
    - Die App läuft auf [http://localhost:4200](http://localhost:4200)
 
-5. **Benutzung**
+4. **Benutzung**
    - Öffne das Frontend im Browser.
-   - Für AI-generierte WODs müssen Backend und AI-Service laufen.
+   - KI-generierte WODs werden durch die OpenAPI-Integration im Backend bereitgestellt.
 
 ---
