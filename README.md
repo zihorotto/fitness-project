@@ -232,3 +232,71 @@ The Fitness Tracker mobile app is built with **Flutter**, providing a native cro
    - KI-generierte WODs werden durch die OpenAPI-Integration im Backend bereitgestellt.
 
 ---
+
+## 📱 Flutter Mobile App
+
+Die Fitness Tracker Mobile App ist mit **Flutter** entwickelt und bietet eine native Cross-Platform-Erfahrung für iOS, Android, Web und Desktop.
+
+### Funktionen
+
+- **Dashboard** - Übersicht der absolvierten Workouts, Statistiken und aktuelle Aktivität
+- **WOD-Liste** - Alle verfügbaren Workouts mit Such- und Filterfunktion durchsuchen
+- **WOD-Generator** - Erstelle benutzerdefinierte Workouts mit verschiedenen Formaten (AMRAP, For Time, EMOM, Tabata, RFT)
+- **Timer & Workout-Tracking** - Echtzeit-Workout-Ausführung mit:
+  - Automatischer Countdown (3-2-1 LOS!)
+  - Phasenbasierte Zeitmessung für AMRAP/RFT-Workouts
+  - Work/Rest-Zyklenverfolgung
+  - Wiederholungszähler für AMRAP und RFT-Formate
+  - Automatisches Speichern der Workout-Ergebnisse
+- **Profil** - Benutzerprofilverwaltung und Einstellungen
+
+### Flutter Tech Stack
+
+- **Framework:** Flutter 3.x
+- **State Management:** Provider
+- **HTTP Client:** Dart http package
+- **UI Components:** Material Design
+- **Lokale Speicherung:** Shared Preferences
+
+### Setup - Flutter Mobile
+
+1. **Installiere Flutter**
+   - Download von [flutter.dev](https://flutter.dev)
+   - Folge der Installationsanleitung für dein Betriebssystem
+
+2. **Navigiere zum Projekt**
+
+   ```bash
+   cd fitness_mobile
+   ```
+
+3. **Hole die Abhängigkeiten**
+
+   ```bash
+   flutter pub get
+   ```
+
+4. **Führe das Projekt auf deinem Gerät/Emulator aus**
+
+   ```bash
+   # Für Android
+   flutter run -d android
+
+   # Für iOS
+   flutter run -d ios
+
+   # Für Chrome/Web
+   flutter run -d chrome
+   ```
+
+### Flutter Screenshots
+
+> 🖼️ Screenshots von allen Screens werden hier hinzugefügt
+
+- **Dashboard** - Workout-Verlauf und Statistiken
+- **Alle Workouts** - WODs durchsuchen und filtern
+- **Workout erstellen** - KI-gestützte und manuelle WOD-Erstellung
+- **Timer-Screen** - Echtzeit-Workout-Verfolgung mit visuelles Feedback
+- **Workout-Details** - Vollständige Workout-Spezifikationen und Bewegungen
+
+---
