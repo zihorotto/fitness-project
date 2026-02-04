@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/api/wods")
 @RequiredArgsConstructor
-@CrossOrigin("*")
 @Slf4j
 public class WODController {
 
@@ -53,7 +52,8 @@ public class WODController {
         wod.setName(dto.getName());
         wod.setType(dto.getType());
         wod.setCategory(dto.getCategory());
-        wod.setDurationInMinutes(dto.getDurationInMinutes());
+        wod.setDurationInSeconds(dto.getDurationInSeconds());
+        wod.setDurationDisplay(dto.getDurationDisplay());
         wod.setMovements(dto.getMovements());
         wod.setDescription(dto.getDescription());
         wod.setFullDescription(dto.getFullDescription());
@@ -83,14 +83,27 @@ public class WODController {
     @PostMapping("/generate-and-save")
     public ResponseEntity<WOD> generateAndSaveWOD(@RequestBody WODRequestDto dto) {
         try {
-            log.info("Generating WOD with OpenAI: {}", dto.getName());
+            log.info("=== WOD Generation Request ===");
+            log.info("Name: {}", dto.getName());
+            log.info("Type: {}", dto.getType());
+            log.info("Category: {}", dto.getCategory());
+            log.info("Duration In Seconds: {} (Type: {})", dto.getDurationInSeconds(), 
+                dto.getDurationInSeconds() != null ? dto.getDurationInSeconds().getClass().getSimpleName() : "null");
+            log.info("Duration Display: {}", dto.getDurationDisplay());
+            log.info("Movements: {}", dto.getMovements());
+            log.info("==============================");
+            
+            // Use durationDisplay if available, otherwise calculate from seconds
+            int seconds = dto.getDurationInSeconds() != null ? dto.getDurationInSeconds() : 1200; // Default 20 min
+            String displayDuration = dto.getDurationDisplay() != null ? dto.getDurationDisplay() : 
+                                    String.format("%d:%02d", seconds / 60, seconds % 60);
             
             // Convert DTO to new request format
             WodRequest request = new WodRequest();
             request.setName(dto.getName());
             request.setType(dto.getType());
             request.setCategory(dto.getCategory());
-            request.setDurationInMinutes(dto.getDurationInMinutes());
+            request.setDurationInSeconds(seconds);
             request.setMovements(dto.getMovements());
             request.setExperience("INTERMEDIATE"); // Default value
             
@@ -101,6 +114,9 @@ public class WODController {
                 log.error("Failed to generate WOD content");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
+            
+            // Set the exact duration display
+            generated.setDurationDisplay(displayDuration);
 
             // Map to entity and save
             WOD saved = wodService.createWOD(mapResponseToEntity(generated));
@@ -119,7 +135,8 @@ public class WODController {
         wod.setName(response.getName());
         wod.setType(response.getType());
         wod.setCategory(response.getCategory());
-        wod.setDurationInMinutes(response.getDurationInMinutes());
+        wod.setDurationInSeconds(response.getDurationInSeconds());
+        wod.setDurationDisplay(response.getDurationDisplay());
         wod.setMovements(response.getMovements());
         wod.setDescription(response.getDescription());
         wod.setFullDescription(response.getFullDescription());

@@ -24,12 +24,13 @@ public class WodGeneratorService {
 
     private String buildPrompt(WodRequest request) {
         StringBuilder prompt = new StringBuilder();
+        int minutes = request.getDurationInSeconds() != null ? request.getDurationInSeconds() / 60 : 20;
         
         prompt.append("Create a CrossFit workout with the following specifications:\n\n");
-        prompt.append("Workout Name: ").append(request.getName()).append("\n");
+        prompt.append("WOD Name: ").append(request.getName()).append("\n");
         prompt.append("Type: ").append(request.getType()).append("\n");
         prompt.append("Category: ").append(request.getCategory()).append("\n");
-        prompt.append("Duration: ").append(request.getDurationInMinutes()).append(" minutes\n");
+        prompt.append("Duration: ").append(minutes).append(" minutes\n");
         prompt.append("Experience Level: ").append(request.getExperience()).append("\n");
         
         if (request.getMovements() != null && !request.getMovements().isEmpty()) {
@@ -82,7 +83,8 @@ public class WodGeneratorService {
         response.setName(request.getName());
         response.setType(request.getType());
         response.setCategory(request.getCategory());
-        response.setDurationInMinutes(request.getDurationInMinutes());
+        response.setDurationInSeconds(request.getDurationInSeconds());
+        response.setDurationDisplay(request.getDurationDisplay() != null ? request.getDurationDisplay() : formatSeconds(request.getDurationInSeconds()));
         response.setMovements(request.getMovements());
         response.setExperience(request.getExperience());
         response.setDescription(description.isEmpty() ? "High-intensity functional fitness workout" : description);
@@ -90,5 +92,12 @@ public class WodGeneratorService {
         response.setCoachingTips(coachingTips.isEmpty() ? "Focus on proper form and listen to your body" : coachingTips);
         
         return response;
+    }
+    
+    private String formatSeconds(Integer seconds) {
+        if (seconds == null || seconds < 60) return "1:00";
+        int minutes = seconds / 60;
+        int secs = seconds % 60;
+        return String.format("%d:%02d", minutes, secs);
     }
 }

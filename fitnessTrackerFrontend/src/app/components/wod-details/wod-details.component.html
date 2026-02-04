@@ -1,22 +1,26 @@
 <!-- Loading állapot -->
 <div *ngIf="loading" class="text-center mt-10">
-  <p class="text-purple-400 animate-pulse">Loading WOD details...</p>
+  <p class="animate-pulse" style="color: var(--primary-violet-light)">
+    Loading WOD details...
+  </p>
 </div>
 
 <!-- WOD megjelenítés, ha nincs loading és van adat -->
 <div
   *ngIf="!loading && wod"
-  class="max-w-2xl mx-auto mt-10 bg-white/70 p-6 rounded-2xl shadow-xl backdrop-blur-md border border-purple-200"
+  class="max-w-2xl mx-auto mt-10 bg-white/70 p-6 rounded-2xl shadow-xl backdrop-blur-md"
+  style="border: 1px solid var(--primary-violet-lightest)"
 >
   <!-- Cím -->
   <h1
-    class="text-4xl font-extrabold text-purple-800 mb-6 text-center drop-shadow-md"
+    class="text-4xl font-extrabold mb-6 text-center drop-shadow-md"
+    style="color: var(--primary-violet-dark)"
   >
     {{ wod.name }}
   </h1>
 
   <!-- WOD információk -->
-  <div class="text-center text-purple-600 mb-8 space-y-1">
+  <div class="text-center mb-8 space-y-1" style="color: var(--primary-violet)">
     <span class="block font-medium"
       >🏋️ Type: <span class="font-bold">{{ wod.type }}</span></span
     >
@@ -31,7 +35,10 @@
 
   <!-- Rövid leírás -->
   <div class="mb-8">
-    <h2 class="text-2xl font-semibold text-purple-700 mb-2 text-center">
+    <h2
+      class="text-2xl font-semibold mb-2 text-center"
+      style="color: var(--primary-violet)"
+    >
       Description
     </h2>
     <p class="text-gray-900 whitespace-pre-line text-center">
@@ -41,7 +48,10 @@
 
   <!-- Teljes leírás, ha van -->
   <div *ngIf="wod.fullDescription">
-    <h2 class="text-2xl font-semibold text-purple-700 mb-2 text-center">
+    <h2
+      class="text-2xl font-semibold mb-2 text-center"
+      style="color: var(--primary-violet)"
+    >
       Full Description
     </h2>
     <p class="text-gray-900 whitespace-pre-line text-center">
@@ -50,8 +60,15 @@
   </div>
 
   <!-- Edzés időzítő -->
-  <div *ngIf="wod.type" class="mt-12 border-t border-purple-300 pt-6 relative">
-    <h3 class="text-2xl font-bold text-purple-900 mb-4 text-center">
+  <div
+    *ngIf="wod.type"
+    class="mt-12 pt-6 relative"
+    style="border-top: 1px solid var(--primary-violet-lightest)"
+  >
+    <h3
+      class="text-2xl font-bold mb-4 text-center"
+      style="color: var(--primary-violet-dark)"
+    >
       🔥 Workout Timer
     </h3>
 
@@ -66,7 +83,18 @@
       <!-- Óra stílus választó -->
       <button
         (click)="toggleTimerStyle()"
-        class="mb-2 px-4 py-1 rounded-full border border-purple-400 bg-purple-50 text-purple-700 text-sm hover:bg-purple-100 transition"
+        class="mb-2 px-4 py-1 rounded-full text-sm transition"
+        style="
+          border: 1px solid var(--primary-violet);
+          background: var(--primary-violet-lightest);
+          color: var(--primary-violet);
+        "
+        (mouseenter)="
+          $event.target.style.background = 'var(--primary-violet-light)'
+        "
+        (mouseleave)="
+          $event.target.style.background = 'var(--primary-violet-lightest)'
+        "
       >
         Clock style: {{ timerStyle === "circle" ? "Circle" : "Digital" }}
       </button>
@@ -79,7 +107,7 @@
             cy="60"
             r="54"
             fill="none"
-            stroke="#e9d5ff"
+            stroke="var(--primary-violet-lightest)"
             stroke-width="10"
           />
           <circle
@@ -87,7 +115,7 @@
             cy="60"
             r="54"
             fill="none"
-            [attr.stroke]="'#a78bfa'"
+            [attr.stroke]="'var(--primary-violet-light)'"
             stroke-width="10"
             [attr.stroke-dasharray]="339.292"
             [attr.stroke-dashoffset]="getCircleDashOffset()"
@@ -100,7 +128,7 @@
             y="68"
             text-anchor="middle"
             font-size="28"
-            fill="#7c3aed"
+            fill="var(--primary-violet)"
             font-weight="bold"
           >
             {{ displayTime }}
@@ -118,7 +146,14 @@
         <!-- Start Button -->
         <button
           *ngIf="!timerRunning && elapsedSeconds === 0"
-          class="bg-purple-700 text-white px-6 py-2 rounded-full hover:bg-purple-800 shadow-md transition duration-200"
+          class="text-white px-6 py-2 rounded-full shadow-md transition duration-200"
+          style="background: var(--primary-violet-dark)"
+          (mouseenter)="
+            $event.target.style.background = 'var(--primary-violet)'
+          "
+          (mouseleave)="
+            $event.target.style.background = 'var(--primary-violet-dark)'
+          "
           (click)="toggleTimer()"
         >
           Start ▶️
@@ -159,20 +194,28 @@
         >
           +1 Rep
         </button>
-        <span class="text-lg font-medium text-purple-800"
-          >Reps: {{ reps }}</span
+        <span
+          class="text-lg font-medium"
+          style="color: var(--primary-violet-dark)"
+        >
+          Reps: {{ reps }}</span
         >
       </div>
 
       <!-- EMOM típusú edzés kör információ -->
-      <div *ngIf="wod.type === 'EMOM'" class="text-sm text-purple-500 mt-2">
+      <div
+        *ngIf="wod.type === 'EMOM'"
+        class="text-sm mt-2"
+        style="color: var(--primary-violet-light)"
+      >
         🔁 Round: {{ emomRound }} / {{ emomTotalRounds }}
       </div>
 
       <!-- Tabata típusú edzés kör és fázis információ -->
       <div
         *ngIf="wod.type === 'Tabata'"
-        class="text-sm text-purple-500 mt-2 text-center"
+        class="text-sm mt-2 text-center"
+        style="color: var(--primary-violet-light)"
       >
         🔄 Round: {{ tabataRound }} / 8 <br />
         💥 Phase:
@@ -219,7 +262,7 @@
           <span class="wod-result-value">{{ result.reps }}</span>
         </div>
         <div class="wod-result-date">
-          <span>Saved on: {{ result.savedAt | date : "medium" }}</span>
+          <span>Saved on: {{ result.savedAt | date: "medium" }}</span>
         </div>
       </div>
     </div>
@@ -244,7 +287,9 @@
       font-size: 8rem;
       color: #ffcc00;
       font-weight: bold;
-      text-shadow: 0 0 20px #ffcc00, 0 0 30px #ff9900;
+      text-shadow:
+        0 0 20px #ffcc00,
+        0 0 30px #ff9900;
       animation: pulse 1s infinite;
     }
 
@@ -257,7 +302,9 @@
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
+      transition:
+        background-color 0.3s,
+        transform 0.2s;
     }
 
     .cancel-button:hover {

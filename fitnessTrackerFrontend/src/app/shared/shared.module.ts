@@ -8,22 +8,20 @@ import { RouterModule } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
-  providers: [
-    provideHttpClient(withFetch())
-  ],
+  providers: [provideHttpClient(withFetch())],
   imports: [
     CommonModule,
     DemoNgZorroAntdModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [
     CommonModule,
     DemoNgZorroAntdModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
-  ]
+    RouterModule,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

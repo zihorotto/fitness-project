@@ -19,8 +19,11 @@ public class WOD {
     private String type; // pl. "AMRAP", "FOR TIME"
     private String category; // pl. "HERO", "BENCHMARK"
 
-    @Column(name = "duration_in_minutes")
-    private Integer durationInMinutes;
+    @Column(name = "duration_in_seconds")
+    private Integer durationInSeconds; // Duration in seconds (e.g., 620 for 10:20)
+    
+    @Column(name = "duration_display")
+    private String durationDisplay; // Format: MM:SS (e.g., "10:20")
 
     @Column(name = "description", length = 2000)
     private String description;

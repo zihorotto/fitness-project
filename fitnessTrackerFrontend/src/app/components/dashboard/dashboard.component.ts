@@ -32,7 +32,7 @@ Chart.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 @Component({
   selector: 'app-dashboard',
@@ -63,7 +63,7 @@ export class DashboardComponent {
   constructor(
     private userService: UserService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
   ) {}
 
   // Open sidebar (on hover/tap)
@@ -100,7 +100,7 @@ export class DashboardComponent {
           this.userService
             .getWodResultsByWodId(wod.id)
             .toPromise()
-            .then((results) => ({ wod, results }))
+            .then((results) => ({ wod, results })),
         );
         Promise.all(wodFetches).then((wodResultsArr) => {
           this.wods = wodResultsArr
@@ -110,10 +110,16 @@ export class DashboardComponent {
           this.totalLoggedMinutes = 0;
           wodResultsArr.forEach((x) => {
             if (x.results && x.results.length > 0) {
-              this.wodResults[x.wod.id] = x.results;
-              this.totalLoggedMinutes += x.results.reduce(
+              // Sort results by savedAt date (newest first)
+              const sortedResults = [...x.results].sort((a, b) => {
+                const dateA = new Date(a.savedAt).getTime();
+                const dateB = new Date(b.savedAt).getTime();
+                return dateB - dateA; // Descending order (newest first)
+              });
+              this.wodResults[x.wod.id] = sortedResults;
+              this.totalLoggedMinutes += sortedResults.reduce(
                 (sum, r) => sum + Math.round((r.durationInSeconds || 0) / 60),
-                0
+                0,
               );
             }
           });

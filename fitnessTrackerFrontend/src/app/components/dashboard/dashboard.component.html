@@ -21,12 +21,17 @@
   <!-- Menü tartalma ide jön -->
 </nav>
 <div class="dashboard-wods-container container mx-auto px-6 py-8 max-w-7xl">
-  <h1 class="text-3xl font-extrabold mb-6 text-center text-purple-900">
+  <h1
+    class="text-3xl font-extrabold mb-6 text-center"
+    style="color: var(--primary-violet-dark)"
+  >
     WOdboard
   </h1>
 
   <div *ngIf="loadingWods" class="text-center my-8">
-    <span class="text-purple-400 animate-pulse">Loading WODs...</span>
+    <span class="animate-pulse" style="color: var(--primary-violet-light)"
+      >Loading WODs...</span
+    >
   </div>
 
   <div *ngIf="!loadingWods && wods.length === 0" class="text-center my-8">
@@ -35,7 +40,10 @@
 
   <div *ngIf="!loadingWods && wods.length > 0">
     <div class="mb-8 flex flex-col items-center">
-      <div class="font-bold text-lg text-purple-800 mb-2">
+      <div
+        class="font-bold text-lg mb-2"
+        style="color: var(--primary-violet-dark)"
+      >
         Total logged minutes:
       </div>
       <div class="w-64 h-64 relative flex items-center justify-center">
@@ -57,14 +65,18 @@
                   : (totalLoggedMinutes / 500) * 565.48)
               "
               stroke-linecap="butt"
+              [attr.stroke]="'var(--primary-violet)'"
             />
           </ng-container>
         </svg>
-        <span class="text-4xl font-extrabold text-purple-700 z-10">{{
-          totalLoggedMinutes
-        }}</span>
         <span
-          class="absolute bottom-8 left-1/2 -translate-x-1/2 text-purple-500 font-semibold"
+          class="text-4xl font-extrabold z-10"
+          style="color: var(--primary-violet)"
+          >{{ totalLoggedMinutes }}</span
+        >
+        <span
+          class="absolute bottom-8 left-1/2 -translate-x-1/2 font-semibold"
+          style="color: var(--primary-violet-light)"
           >minutes</span
         >
       </div>
@@ -83,7 +95,7 @@
           <p class="text-gray-700 text-sm" style="white-space: pre-line">
             {{ wod.description }}
           </p>
-          <div class="mt-2 text-xs text-purple-700">
+          <div class="mt-2 text-xs" style="color: var(--primary-violet)">
             <span class="mr-2"
               >Type: <b>{{ wod.type }}</b></span
             >
@@ -99,10 +111,15 @@
           class="px-6 py-4 bg-gray-50 border-t border-gray-200 text-gray-600 text-xs font-semibold"
         >
           <div *ngIf="wodResults[wod.id]?.length > 0">
-            <div class="font-bold text-purple-800 mb-1">Recent results:</div>
+            <div
+              class="font-bold mb-1"
+              style="color: var(--primary-violet-dark)"
+            >
+              Recent results:
+            </div>
             <div class="wod-results-grid">
               <div
-                *ngFor="let result of wodResults[wod.id] | slice : 0 : 2"
+                *ngFor="let result of wodResults[wod.id] | slice: 0 : 2"
                 class="wod-result-card mb-2"
               >
                 <div class="wod-result-row">
@@ -122,7 +139,7 @@
                   <span class="wod-result-value">{{ result.reps }}</span>
                 </div>
                 <div class="wod-result-date">
-                  <span>Saved: {{ result.savedAt | date : "medium" }}</span>
+                  <span>Saved: {{ result.savedAt | date: "medium" }}</span>
                 </div>
               </div>
             </div>

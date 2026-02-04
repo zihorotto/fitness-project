@@ -37,8 +37,85 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
 
 ![Timer](./fitnessTrackerFrontend/public/timer.jpg)
 
+Mobile:
 
-### Local Setup – Step by Step
+![Login](./fitness_mobile/public/login.jpg)
+
+![Add Wod](./fitness_mobile/public/addwod.jpg)
+
+![WODS](./fitness_mobile/public/wods.jpg)
+
+![Wod Details](./fitness_mobile/public/wodetails.jpg)
+
+![WodBoard](./fitness_mobile/public/wodboard.jpg)
+
+## 📱 Flutter Mobile App
+
+The Fitness Tracker mobile app is built with **Flutter**, providing a native cross-platform experience for iOS, Android, Web, and Desktop.
+
+### Features
+
+- **Dashboard** - Overview of completed workouts, statistics, and recent activity
+- **WOD List** - Browse all available workouts with search and filter functionality
+- **WOD Generator** - Create custom workouts with different formats (AMRAP, For Time, EMOM, Tabata, RFT)
+- **Timer & Workout Tracking** - Real-time workout execution with:
+  - Automatic countdown (3-2-1 GO!)
+  - Phase-based timing for AMRAP/RFT workouts
+  - Work/Rest cycle tracking
+  - Rep counter for AMRAP and RFT formats
+  - Automatic save of workout results
+- **Profile** - User profile management and preferences
+
+### Flutter Tech Stack
+
+- **Framework:** Flutter 3.x
+- **State Management:** Provider
+- **HTTP Client:** Dart http package
+- **UI Components:** Material Design
+- **Local Storage:** Shared Preferences
+
+### Setup - Flutter Mobile
+
+1. **Install Flutter**
+   - Download from [flutter.dev](https://flutter.dev)
+   - Follow installation guide for your OS
+
+2. **Navigate to the project**
+
+   ```bash
+   cd fitness_mobile
+   ```
+
+3. **Get dependencies**
+
+   ```bash
+   flutter pub get
+   ```
+
+4. **Run on your device/emulator**
+
+   ```bash
+   # For Android
+   flutter run -d android
+
+   # For iOS
+   flutter run -d ios
+
+   # For Chrome/Web
+   flutter run -d chrome
+   ```
+
+### Flutter Screenshots
+
+> 🖼️ Screenshots from all screens will be added here
+
+- **Dashboard** - Workout history and statistics
+- **WODS** - Browse and filter WODs
+- **Create WOD** - AI-powered and manual WOD creation
+- **Timer Screen** - Real-time workout tracking with visual feedback
+- **Workout Detail** - Full workout specifications and movements
+
+---
 
 1. **Clone the repository**
 
@@ -48,7 +125,6 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
    ```
 
 2. **Backend (Spring Boot)**
-
    - Go to `fitnessTrackerBackend`:
      ```bash
      cd fitnessTrackerBackend
@@ -68,7 +144,6 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
    - The backend runs on [http://localhost:8080](http://localhost:8080)
 
 3. **Frontend (Angular)**
-
    - Go to `fitnessTrackerFrontend`:
      ```bash
      cd fitnessTrackerFrontend
@@ -119,7 +194,6 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
    ```
 
 2. **Backend (Spring Boot)**
-
    - Wechsle in das Verzeichnis `fitnessTrackerBackend`:
      ```bash
      cd fitnessTrackerBackend
@@ -139,7 +213,6 @@ Unten finden Sie einige Screenshots, die das Projekt veranschaulichen:
    - Das Backend läuft auf [http://localhost:8080](http://localhost:8080)
 
 3. **Frontend (Angular)**
-
    - Wechsle in das Verzeichnis `fitnessTrackerFrontend`:
      ```bash
      cd fitnessTrackerFrontend

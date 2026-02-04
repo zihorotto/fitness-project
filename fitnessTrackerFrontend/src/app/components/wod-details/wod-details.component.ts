@@ -60,7 +60,7 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private userService: UserService,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef // Added ChangeDetectorRef for manual change detection
+    private cdr: ChangeDetectorRef, // Added ChangeDetectorRef for manual change detection
   ) {}
 
   ngOnInit(): void {
@@ -209,7 +209,7 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
           this.emomRound++;
           if (this.emomRound >= this.emomTotalRounds) {
             console.log(
-              'EMOM rounds completed. Stopping timer and saving result.'
+              'EMOM rounds completed. Stopping timer and saving result.',
             );
             this.stopAndSave();
           }
@@ -234,7 +234,7 @@ export class WodDetailsComponent implements OnInit, OnDestroy {
             this.secondsLeft = 20;
             if (this.tabataRound > totalRounds) {
               console.log(
-                'Tabata rounds completed. Stopping timer and saving result.'
+                'Tabata rounds completed. Stopping timer and saving result.',
               );
               this.stopAndSave();
             }

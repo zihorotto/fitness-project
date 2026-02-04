@@ -4,41 +4,64 @@
   </h1>
 
   <!-- Search -->
-  <form [formGroup]="wodsForm" (ngSubmit)="searchWODs()" class="wods-search-form">
+  <form
+    [formGroup]="wodsForm"
+    (ngSubmit)="searchWODs()"
+    class="wods-search-form"
+  >
     <input
       nz-input
       formControlName="search"
       class="wods-search-input"
       placeholder="Search WODs"
-      (ngModelChange)="searchWODs()" />
+      (ngModelChange)="searchWODs()"
+    />
     <button
       nz-button
       nzType="default"
       [disabled]="loading"
-      class="wods-search-button lila-button">
+      class="wods-search-button lila-button"
+    >
       Search
     </button>
   </form>
 
   <!-- Create WOD trigger -->
   <div class="text-center mb-12">
-    <button nz-button (click)="toggleCreateSection()" class="create-wod-submit-button lila-button">
-      {{ createSectionVisible ? 'Close' : 'Create New WOD' }}
+    <button
+      nz-button
+      (click)="toggleCreateSection()"
+      class="create-wod-submit-button lila-button"
+    >
+      {{ createSectionVisible ? "Close" : "Create New WOD" }}
     </button>
   </div>
 
   <!-- WOD form -->
   <div
     [@toggleHeight]="createSectionVisible ? 'expanded' : 'collapsed'"
-    class="max-w-xl mx-auto mb-14 overflow-hidden transition-all duration-300">
+    class="max-w-xl mx-auto mb-14 overflow-hidden transition-all duration-300"
+  >
     <div class="p-8 border border-gray-200 rounded-2xl shadow-lg bg-white">
-      <h3 class="text-3xl font-semibold mb-8 text-center text-gray-800">Create a New WOD</h3>
+      <h3 class="text-3xl font-semibold mb-8 text-center text-gray-800">
+        Create a New WOD
+      </h3>
 
-      <form [formGroup]="newWodForm" (ngSubmit)="createWOD()" class="space-y-6" novalidate>
+      <form
+        [formGroup]="newWodForm"
+        (ngSubmit)="createWOD()"
+        class="space-y-6"
+        novalidate
+      >
         <nz-form-item>
           <nz-form-label nzRequired nzFor="name">Name</nz-form-label>
           <nz-form-control [nzErrorTip]="'Name is required'">
-            <input id="name" nz-input formControlName="name" placeholder="WOD Name" />
+            <input
+              id="name"
+              nz-input
+              formControlName="name"
+              placeholder="WOD Name"
+            />
           </nz-form-control>
         </nz-form-item>
 
@@ -51,15 +74,25 @@
               formControlName="description"
               rows="4"
               class="no-lila-hover"
-              placeholder="Description (optional)"></textarea>
+              placeholder="Description (optional)"
+            ></textarea>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label nzRequired nzFor="category">Category</nz-form-label>
           <nz-form-control [nzErrorTip]="'Category is required'">
-            <nz-select id="category" formControlName="category" class="no-lila-hover" placeholder="Select category">
-              <nz-option *ngFor="let cat of categories" [nzValue]="cat" [nzLabel]="cat"></nz-option>
+            <nz-select
+              id="category"
+              formControlName="category"
+              class="no-lila-hover"
+              placeholder="Select category"
+            >
+              <nz-option
+                *ngFor="let cat of categories"
+                [nzValue]="cat"
+                [nzLabel]="cat"
+              ></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -67,8 +100,17 @@
         <nz-form-item>
           <nz-form-label nzRequired nzFor="type">Type</nz-form-label>
           <nz-form-control [nzErrorTip]="'Type is required'">
-            <nz-select id="type" formControlName="type" class="no-lila-hover" placeholder="Select type">
-              <nz-option *ngFor="let t of types" [nzValue]="t" [nzLabel]="t"></nz-option>
+            <nz-select
+              id="type"
+              formControlName="type"
+              class="no-lila-hover"
+              placeholder="Select type"
+            >
+              <nz-option
+                *ngFor="let t of types"
+                [nzValue]="t"
+                [nzLabel]="t"
+              ></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
@@ -76,24 +118,51 @@
         <nz-form-item>
           <nz-form-label nzRequired nzFor="movements">Movements</nz-form-label>
           <nz-form-control [nzErrorTip]="'Movements are required'">
-            <input id="movements" nz-input formControlName="movements" placeholder="e.g. Push-ups, Squats" />
+            <input
+              id="movements"
+              nz-input
+              formControlName="movements"
+              placeholder="e.g. Push-ups, Squats"
+            />
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-label nzRequired nzFor="duration">Duration (minutes)</nz-form-label>
+          <nz-form-label nzRequired nzFor="duration"
+            >Duration (minutes)</nz-form-label
+          >
           <nz-form-control [nzErrorTip]="'Duration must be at least 1 minute'">
-            <input id="duration" nz-input type="number" formControlName="durationInMinutes" placeholder="Duration" min="1" />
+            <input
+              id="duration"
+              nz-input
+              type="number"
+              formControlName="durationInMinutes"
+              placeholder="Duration"
+              min="1"
+            />
           </nz-form-control>
         </nz-form-item>
 
         <!-- Buttons -->
         <div class="flex flex-wrap gap-4 justify-center">
-          <button type="submit" nz-button nzType="default" class="create-wod-button" [disabled]="creating || newWodForm.invalid">
-            {{ creating ? 'Creating...' : 'Create WOD' }}
+          <button
+            type="submit"
+            nz-button
+            nzType="default"
+            class="create-wod-button"
+            [disabled]="creating || newWodForm.invalid"
+          >
+            {{ creating ? "Creating..." : "Create WOD" }}
           </button>
-          <button nz-button nzType="default" class="create-wod-button" type="button" (click)="generateWODWithAI()" [disabled]="creating || newWodForm.invalid">
-            {{ creating ? 'Generating...' : 'Generate WOD with AI' }}
+          <button
+            nz-button
+            nzType="default"
+            class="create-wod-button"
+            type="button"
+            (click)="generateWODWithAI()"
+            [disabled]="creating || newWodForm.invalid"
+          >
+            {{ creating ? "Generating..." : "Generate WOD with AI" }}
           </button>
         </div>
       </form>
@@ -109,9 +178,13 @@
     >
       <div class="px-6 py-4 flex-grow">
         <h3 class="text-xl font-bold mb-2 text-gray-900">{{ wod.name }}</h3>
-    <p class="text-gray-700 text-sm" style="white-space: pre-line;">{{ wod.description }}</p>
+        <p class="text-gray-700 text-sm" style="white-space: pre-line">
+          {{ wod.description }}
+        </p>
       </div>
-      <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 text-gray-600 text-xs font-semibold">
+      <div
+        class="px-6 py-4 bg-gray-50 border-t border-gray-200 text-gray-600 text-xs font-semibold"
+      >
         <p class="default-text">{{ wod.type }}</p>
         <p class="hover-text">Let's Go</p>
       </div>

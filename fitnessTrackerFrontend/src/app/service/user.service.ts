@@ -90,7 +90,7 @@ export class UserService {
 
   getWodResultsByWodId(wodId: number) {
     return this.http.get<WodResultResponseDto[]>(
-      BASIC_URL + 'api/wod-results/wod/' + wodId
+      BASIC_URL + 'api/wod-results/wod/' + wodId,
     );
   }
 }

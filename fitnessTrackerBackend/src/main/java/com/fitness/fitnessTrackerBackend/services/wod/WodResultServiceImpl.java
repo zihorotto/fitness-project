@@ -1,6 +1,7 @@
 package com.fitness.fitnessTrackerBackend.services.wod;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,14 +25,22 @@ public class WodResultServiceImpl  implements WodResultService  {
 
     @Override
     public WodResult saveResult(WodResultDto dto) {
+        System.out.println("Saving WOD result with ID: " + dto.getWodId());
+        if (dto.getWodId() == null || dto.getWodId() <= 0) {
+            throw new RuntimeException("Invalid WOD ID: " + dto.getWodId());
+        }
+        
         WOD wod = wodRepository.findById(dto.getWodId())
             .orElseThrow(() -> new RuntimeException("WOD not found with id " + dto.getWodId()));
 
         WodResult result = new WodResult();
-        result.setWod(wod);  // itt már WOD entitást adhatsz át
+        result.setWod(wod);
         result.setDurationInSeconds(dto.getDurationInSeconds());
         result.setReps(dto.getReps());
-        return wodResultRepository.save(result);
+        result.setSavedAt(LocalDateTime.now());
+        WodResult saved = wodResultRepository.save(result);
+        System.out.println("WOD result saved with ID: " + saved.getId());
+        return saved;
     }
 
     @Override
@@ -48,7 +57,7 @@ public class WodResultServiceImpl  implements WodResultService  {
         dto.setWodId(entity.getWod().getId());
         dto.setDurationInSeconds(entity.getDurationInSeconds());
         dto.setReps(entity.getReps());
-        dto.setSavedAt(entity.getSavedAt());
+        dto.setSavedAt(entity.getSavedAt().toString());
         return dto;
     }
 }

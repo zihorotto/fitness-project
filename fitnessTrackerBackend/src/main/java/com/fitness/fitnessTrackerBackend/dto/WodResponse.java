@@ -12,7 +12,8 @@ public class WodResponse {
     private String name;
     private String type;
     private String category;
-    private Integer durationInMinutes;
+    private Integer durationInSeconds; // Duration in seconds (e.g., 620 for 10:20)
+    private String durationDisplay; // Format: MM:SS (e.g., "10:20")
     private String movements;
     private String experience;
     private String description; // Short description

@@ -205,7 +205,9 @@ nz-footer {
   padding: 10px 20px;
   border-radius: 5px;
   background: linear-gradient(90deg, #7c3aed, #5b21b6);
-  transition: transform 0.3s, background 0.3s;
+  transition:
+    transform 0.3s,
+    background 0.3s;
   text-align: center;
 }
 

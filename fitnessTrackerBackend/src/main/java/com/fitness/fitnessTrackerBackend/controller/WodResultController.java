@@ -29,9 +29,24 @@ public class WodResultController  {
 
 
     @PostMapping
-    public ResponseEntity<WodResult> saveWodResult(@RequestBody WodResultDto dto) {
-        WodResult saved = wodResultService.saveResult(dto);
-        return ResponseEntity.ok(saved);
+    public ResponseEntity<WodResultResponseDto> saveWodResult(@RequestBody WodResultDto dto) {
+        try {
+            WodResult saved = wodResultService.saveResult(dto);
+            
+            // Convert to DTO with String date
+            WodResultResponseDto response = new WodResultResponseDto();
+            response.setId(saved.getId());
+            response.setWodId(saved.getWod().getId());
+            response.setDurationInSeconds(saved.getDurationInSeconds());
+            response.setReps(saved.getReps());
+            response.setSavedAt(saved.getSavedAt().toString());
+            
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (RuntimeException e) {
+            System.err.println("Error saving WOD result: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @GetMapping("/wod/{wodId}")

@@ -12,7 +12,8 @@ public class WodRequest {
     private String name;
     private String type = "AMRAP"; // AMRAP, EMOM, FOR_TIME, etc.
     private String category = "GENERAL"; // STRENGTH, CARDIO, GENERAL, etc.
-    private Integer durationInMinutes = 20;
+    private Integer durationInSeconds = 1200; // Default 20 minutes (20*60) in seconds
+    private String durationDisplay; // Format: MM:SS display (e.g., "10:20")
     private String movements; // comma separated list
     private String experience = "INTERMEDIATE"; // BEGINNER, INTERMEDIATE, ADVANCED
     private String equipment; // available equipment

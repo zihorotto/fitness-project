@@ -9,7 +9,7 @@ import {
   state,
   style,
   transition,
-  animate
+  animate,
 } from '@angular/animations';
 
 @Component({
@@ -22,19 +22,19 @@ import {
     trigger('toggleHeight', [
       state('collapsed', style({ height: '0px', opacity: 0, padding: '0' })),
       state('expanded', style({ height: '*', opacity: 1, padding: '*' })),
-      transition('collapsed <=> expanded', animate('300ms ease-in-out'))
-    ])
-  ]
+      transition('collapsed <=> expanded', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
 export class WodsComponent implements OnInit {
   gridStyle = {
-  width: '100%',
-  textAlign: 'center'
-};
+    width: '100%',
+    textAlign: 'center',
+  };
   wodsForm!: FormGroup;
   wods: WOD[] = [];
   loading = false;
-  hoveredWodId: number | null = null; 
+  hoveredWodId: number | null = null;
 
   // Új WOD létrehozáshoz
   newWodForm!: FormGroup;
@@ -47,7 +47,7 @@ export class WodsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private message: NzMessageService,
-    private userService: UserService
+    private userService: UserService,
   ) {}
 
   ngOnInit() {
@@ -126,7 +126,7 @@ export class WodsComponent implements OnInit {
         this.getAllWODs();
       },
       error: (err) => {
-         console.error('Create WOD error: ', err);
+        console.error('Create WOD error: ', err);
         this.message.error('Error while creating WOD.');
         this.creating = false;
       },
@@ -134,32 +134,39 @@ export class WodsComponent implements OnInit {
   }
 
   generateWODWithAI() {
-    
-      console.log('Form érték:', this.newWodForm.value);
+    console.log('Form érték:', this.newWodForm.value);
 
     if (this.newWodForm.invalid) {
       this.message.error('Please fill all required fields.');
       return;
     }
 
-    const { name, type, category, durationInMinutes, movements } = this.newWodForm.value;
+    const { name, type, category, durationInMinutes, movements } =
+      this.newWodForm.value;
 
     this.creating = true;
 
-    this.userService.generateAndSaveWOD({ name, type, category, durationInMinutes, movements }).subscribe({
-      next: (generatedWod) => {
-        console.log('✅ Sikeres válasz (next):', generatedWod);
-        this.message.success('AI-generated WOD created and saved!');
-        this.newWodForm.reset();
-        this.creating = false;
-        this.getAllWODs();
-      },
-      error: (err) => {
-        console.error('❌ Hiba történt (error ág):', err);
-        this.message.error('Failed to generate WOD.');
-        this.creating = false;
-      }
-    });
+    this.userService
+      .generateAndSaveWOD({
+        name,
+        type,
+        category,
+        durationInMinutes,
+        movements,
+      })
+      .subscribe({
+        next: (generatedWod) => {
+          console.log('✅ Sikeres válasz (next):', generatedWod);
+          this.message.success('AI-generated WOD created and saved!');
+          this.newWodForm.reset();
+          this.creating = false;
+          this.getAllWODs();
+        },
+        error: (err) => {
+          console.error('❌ Hiba történt (error ág):', err);
+          this.message.error('Failed to generate WOD.');
+          this.creating = false;
+        },
+      });
   }
-
 }
